@@ -1,5 +1,10 @@
-from src.player.Player import Player
+from player.Player import Player
 
 
 class AIPlayer(Player):
-    pass
+    def turn_started(self):
+        # "think" and act here
+        pass
+
+    def is_finished_turn(self):
+        pass
