@@ -1,4 +1,6 @@
 from figure.Figure import Figure
+from enums.FieldOccupation import FieldOccupation
+from player.Player import Player
 
 
 class Field:
@@ -17,3 +19,12 @@ class Field:
 
     def remove_figure(self):
         self._figure = None
+
+    def get_occupation_type(self, player: Player) -> FieldOccupation:
+        if self._figure is None:
+            return FieldOccupation.EMPTY
+        else:
+            if self._figure.owner == player:
+                return FieldOccupation.FRIENDLY
+            else:
+                return FieldOccupation.ENEMY

@@ -3,10 +3,12 @@ from typing import List
 
 from data_classes.SimplifiedBoard import SimplifiedBoard
 from data_classes.FigureActOptions import FigureActOptions
+from player.Player import Player
 
 
 class Figure(ABC):
-    def __init__(self):
+    def __init__(self, owner: Player):
+        self.owner = owner
         # Parent field should handle position.
         self.x = -1
         self.y = -1
@@ -27,5 +29,3 @@ class Figure(ABC):
     @abstractmethod
     def collect_possible_attacks(self, simple_board: SimplifiedBoard) -> List[(int, int)]:
         """ Retrieves the list of field positions, where it can attack. """
-
-

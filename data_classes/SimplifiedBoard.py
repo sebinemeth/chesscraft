@@ -1,9 +1,8 @@
 from dataclasses import dataclass
-from typing import List
+from typing import Tuple
 
 from enums.FieldOccupation import FieldOccupation
 
 
 class SimplifiedBoard(dataclass):
-    fields: List[List[FieldOccupation]]
-
+    fields: Tuple[Tuple[FieldOccupation]]
