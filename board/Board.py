@@ -27,13 +27,14 @@ class Board:
             self.chosen_field = self.fields[x][y]
             self.acts = self.chosen_field.figure.chosen(self.create_simplified_board(player))
         if self.chosen_field is not None:  # acting with chosen figure (with the assumption
+            fig = self.chosen_field.figure
             if occupation == FieldOccupation.EMPTY:  # step
-                fig = self.chosen_field.figure
-                self.fields[x][y].add_figure(fig)
-                self.chosen_field.remove_figure()
+                self.fields[x][y].add_figure(fig)  # occupy new field
+                self.chosen_field.remove_figure()  # abandon old field
             if occupation == FieldOccupation.ENEMY:  # attack
-                # TODO attack
-                pass
+                self.fields[x][y].remove_figure()  # killing figure there
+                self.fields[x][y].add_figure(fig)  # occupy new field
+                self.chosen_field.remove_figure()  # abandon old field
 
     def check_mouse_clicks(self, events):
         # TODO check mouse events, position for mouse clicks -> call self.field_clicked
