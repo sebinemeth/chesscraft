@@ -22,7 +22,7 @@ class Board:
         # TODO check if current player is my player (don't let clients control the enemy's figures!)
         #   if not, then return/only show some detailed info of field or something like that
         player = Player(Direction.LEFT)  # TODO use PlayerManager's current/my player instead
-        occupation = self.chosen_field.get_occupation_type(player)
+        occupation = self.fields[x][y].get_occupation_type(player)
         if self.chosen_field is None and occupation == FieldOccupation.FRIENDLY:  # choosing figure
             self.chosen_field = self.fields[x][y]
             self.acts = self.chosen_field.figure.chosen(self.create_simplified_board(player))
