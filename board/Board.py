@@ -1,4 +1,5 @@
 from board.Field import Field
+from data_classes.SimplifiedBoard import SimplifiedBoard
 
 
 class Board:
@@ -21,3 +22,6 @@ class Board:
     def update(self, events, pressed_keys) -> bool:
         self.check_mouse_clicks(events)
         return True
+
+    def create_simplified_board(self) -> SimplifiedBoard:
+        pass  # TODO
