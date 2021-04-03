@@ -22,7 +22,6 @@ class Game:
 
     def __init__(self):
         """ Virtually private constructor. """
-        print ("ASDFASDFDASFSAFDASFASDFASFASFASFASFASFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
         if Game.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
@@ -43,8 +42,8 @@ class Game:
         """
         The Game allows changing the GameState object at runtime.
         """
-
-        print(f"Game: Transition to {type(state).__name__}")
+        
+        #print(f"Game: Transition to {type(state).__name__}")
         self._state = state
         self._state.game = self
 
