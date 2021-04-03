@@ -6,3 +6,4 @@ class WaitingForPlayersState(AbstractGameState):
         #print("WaitingForPlayers handles events and input.")
         #print("WaitingForPlayers wants to change the state of the context.")
         #self.game.transition_to(self.game.runningState)
+        pass
