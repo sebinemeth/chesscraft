@@ -2,7 +2,6 @@ import pygame as pg
 from Screen import Screen
 from game.Game import Game
 
-
 def main():
     """" The main function of the game. """
     FPS = 30
