@@ -26,7 +26,8 @@ class Board:
         if self.chosen_field is None and occupation == FieldOccupation.FRIENDLY:  # choosing figure
             self.chosen_field = self.fields[x][y]
             self.acts = self.chosen_field.figure.chosen(self.create_simplified_board(player))
-        if self.chosen_field is not None:  # acting with chosen figure (with the assumption
+        if self.chosen_field is not None:  # acting with chosen figure
+            # TODO  check if (x, y) is in appropriate list of act
             fig = self.chosen_field.figure
             if occupation == FieldOccupation.EMPTY:  # step
                 self.fields[x][y].add_figure(fig)  # occupy new field
