@@ -9,18 +9,22 @@ class AbstractGameState(ABC):
     transition the Context to another State.
     """
 
-    @property
-    def game(self):  # -> Game:
-        return self._game
+    def __init__(self, game):
+        """
 
-    @game.setter
-    def game(self, game):  #: Game) -> None:
+        :param game: the parent Game
+        :type game: Game
+        """
         self._game = game
+
+    @property
+    def game(self):
+        """
+        :return: the parent Game
+        :rtype: Game
+        """
+        return self._game
 
     @abstractmethod
     def update(self, events, pressed_keys) -> bool:
         return True
-
-        # @abstractmethod
-    # def handle1(self) -> None:
-    #    pass

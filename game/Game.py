@@ -1,18 +1,16 @@
 from game.AbstractGameState import AbstractGameState
-from game.FinnishingState import FinnishingState
+from game.FinishingState import FinishingState
 from game.RunningState import RunningState
 from game.WaitingForPlayersState import WaitingForPlayersState
 
 
 class Game:
-    # TODO: implement state-pattern (e.g.: waiting for players, running, finished)
-    #   https://refactoring.guru/design-patterns/state/python/example
-    #   states can be singletons as well?
+    # TODO: states can be singletons as well?
     __instance = None
     _state = None
-    runningState = None
-    finnishingState = None
-    waitingForPlayersState = None
+    running_state = None
+    finishing_state = None
+    waiting_for_players_state = None
 
     @staticmethod
     def get_instance():
@@ -27,24 +25,16 @@ class Game:
             raise Exception("This class is a singleton!")
         else:
             Game.__instance = self
-            self.runningState = RunningState()
-            self.finnishingState = FinnishingState()
-            self.waitingForPlayersState = WaitingForPlayersState()
-            self.transition_to(self.waitingForPlayersState)
-        # __instance.transition_to(state)
+            self.running_state = RunningState(self)
+            self.finishing_state = FinishingState(self)
+            self.waiting_for_players_state = WaitingForPlayersState(self)
+            self.transition_to(self.waiting_for_players_state)
 
     def update(self, events, pressed_keys) -> bool:
         return self._state.update(events, pressed_keys)
 
-
-    def transition_to(self, state):
+    def transition_to(self, state: AbstractGameState):
         """
         The Game allows changing the GameState object at runtime.
         """
-
-        # print(f"Game: Transition to {type(state).__name__}")
         self._state = state
-        self._state.game = self
-
-    # def request1(self):
-    #    self._state.handle1()

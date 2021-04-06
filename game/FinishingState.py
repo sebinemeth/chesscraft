@@ -1,7 +1,7 @@
 from game.AbstractGameState import AbstractGameState
 
 
-class FinnishingState(AbstractGameState):
+class FinishingState(AbstractGameState):
     def update(self, events, pressed_keys) -> bool:
         # print("FinnnishingState handles events and input.")
         # print("FinnnishingState is the end state.")
