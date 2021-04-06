@@ -10,17 +10,17 @@ class AbstractGameState(ABC):
     """
 
     @property
-    def game(self): #-> Game:
+    def game(self):  # -> Game:
         return self._game
 
-    @game.setter 
-    def game(self, game):#: Game) -> None:
+    @game.setter
+    def game(self, game):  #: Game) -> None:
         self._game = game
 
     @abstractmethod
-    def handle_events_and_input(self, events, pressed_keys) -> None:
-        pass   
+    def update(self, events, pressed_keys) -> bool:
+        return True
 
-    #@abstractmethod
-    #def handle1(self) -> None:
+        # @abstractmethod
+    # def handle1(self) -> None:
     #    pass
