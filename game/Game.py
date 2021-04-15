@@ -8,9 +8,6 @@ class Game:
     # TODO: states can be singletons as well?
     __instance = None
     _state = None
-    running_state = None
-    finishing_state = None
-    waiting_for_players_state = None
 
     @staticmethod
     def get_instance():

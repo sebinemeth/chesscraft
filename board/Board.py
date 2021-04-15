@@ -2,48 +2,64 @@ from board.Field import Field
 from data_classes.SimplifiedBoard import SimplifiedBoard
 from data_classes.FigureActOptions import FigureActOptions
 from enums.FieldOccupation import FieldOccupation
+from figure.Figure import Figure
+from figure.Peasant import Peasant
 from player.Player import Player
 from enums.Direction import Direction
+from player.PlayerManager import PlayerManager
 
 
 class Board:
     """ Store fields. Handle figure choosing, stepping, attacking... maybe fog of war too. """
     SIZE = 8
 
-    def __init__(self):  # TODO create instance in Game when game starts
+    def __init__(self):
         self.fields = tuple(tuple(Field(x, y) for y in range(Board.SIZE)) for x in range(Board.SIZE))
-        # TODO add figures to fields
+
+        for i in range(Board.SIZE):  # TODO this is not good yet
+            self.fields[1][i].add_figure(Peasant(PlayerManager.get_instance().my_player))
+            self.fields[Board.SIZE - 1][i].add_figure(Peasant(PlayerManager.get_instance().other_player))
+            # TODO add figures other figures to fields
         # TODO refactor the vars below into state?
         self.chosen_field = None  # type: Field
         self.acts = None  # type: FigureActOptions
 
     def field_clicked(self, x: int, y: int):
-        # TODO do something based use state pattern here?
-        # TODO check if current player is my player (don't let clients control the enemy's figures!)
-        #   if not, then return/only show some detailed info of field or something like that
-        player = Player(Direction.LEFT)  # TODO use PlayerManager's current/my player instead
+        # TODO do something based use state pattern here? - I don't wanna - said Balázs
+        player = PlayerManager.get_instance().my_player
         occupation = self.fields[x][y].get_occupation_type(player)
-        if self.chosen_field is None and occupation == FieldOccupation.FRIENDLY:  # choosing figure
+        if occupation == FieldOccupation.FRIENDLY:  # choosing figure
             self.chosen_field = self.fields[x][y]
             self.acts = self.chosen_field.figure.chosen(self.create_simplified_board(player))
-        if self.chosen_field is not None:  # acting with chosen figure
-            # TODO  check if (x, y) is in appropriate list of act
-            fig = self.chosen_field.figure
-            if occupation == FieldOccupation.EMPTY:  # step
-                self.fields[x][y].add_figure(fig)  # occupy new field
-                self.chosen_field.remove_figure()  # abandon old field
-            if occupation == FieldOccupation.ENEMY:  # attack
-                self.fields[x][y].remove_figure()  # killing figure there
-                self.fields[x][y].add_figure(fig)  # occupy new field
-                self.chosen_field.remove_figure()  # abandon old field
+        else:  # acting with chosen figure
+            if self.chosen_field is None:
+                return False    # do nothing
+            else:
+                we_found_it = False
+                  # The clicked field was not in the possible_attacks or in the possible steps
+                fig = self.chosen_field.figure  # type: Figure
+                if occupation == FieldOccupation.EMPTY:  # step
+                    for field in self.acts.possible_steps:
+                        if field == (x, y):
+                            we_found_it = True
+                    if not we_found_it:
+                        return False
+                    self.fields[x][y].add_figure(fig)  # occupy new field
+                    self.chosen_field.remove_figure()  # abandon old field
+                if occupation == FieldOccupation.ENEMY:  # attack
+                    for field in self.acts.possible_attacks:
+                        if field == (x, y):
+                            we_found_it = True
+                    if not we_found_it:
+                        return False
+                    self.fields[x][y].remove_figure()  # killing figure there
+                    self.fields[x][y].add_figure(fig)  # occupy new field
+                    self.chosen_field.remove_figure()  # abandon old field
+                self.chosen_field = None    # reset chosen field
+                self.acts = None             # reset acts
 
-    def check_mouse_clicks(self, events):
-        # TODO check mouse events, position for mouse clicks -> call self.field_clicked
+    def update(self) -> bool:  # TODO figure out how this will work
         pass
-
-    def update(self, events, pressed_keys) -> bool:  # TODO call this update from Game's update (if game is running)
-        self.check_mouse_clicks(events)
-        return True
 
     def create_simplified_board(self, player: Player) -> SimplifiedBoard:
         return SimplifiedBoard(tuple(tuple(self.fields[x][y].get_occupation_type(player)

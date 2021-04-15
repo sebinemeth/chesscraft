@@ -1,8 +1,22 @@
-class PlayerManager:  # TODO make it Singleton
+class PlayerManager:
+    __instance = None
+
+    @staticmethod
+    def get_instance():
+        """ Static access method. """
+        if PlayerManager.__instance is None:
+            PlayerManager()
+        return PlayerManager.__instance
+
     def __init__(self):
-        self.__my_player = None
-        self.__other_player = None
-        self.__current_player = None
+        """ Virtually private constructor. """
+        if PlayerManager.__instance is not None:
+            raise Exception("This class is a singleton!")
+        else:
+            PlayerManager.__instance = self
+            self.__my_player = None
+            self.__other_player = None
+            self.__current_player = None
 
     # region properties
     @property
