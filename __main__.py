@@ -14,9 +14,7 @@ def main():
         events, pressed_keys = pg.event.get(), pg.key.get_pressed()
         if not Screen.get_instance().update(events, pressed_keys):
             break
-        if not Game.get_instance().update(events, pressed_keys):
-            break
-        clock.tick(FPS)
+        clock.tick(1000//FPS)
     pg.quit()
 
 
