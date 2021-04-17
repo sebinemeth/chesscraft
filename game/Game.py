@@ -1,4 +1,5 @@
 from board.Board import Board
+from player.PlayerManager import PlayerManager
 
 
 class Game:
@@ -22,4 +23,9 @@ class Game:
     @property
     def board(self):
         return self.__board
+
+    @staticmethod
+    def end_turn():
+        PlayerManager.get_instance().turn_passed()
+        # Some other calls may come here later.
 

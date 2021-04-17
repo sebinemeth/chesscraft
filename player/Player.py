@@ -4,8 +4,12 @@ from enums.Direction import Direction
 
 
 class Player(ABC):
-    def __init__(self, direction: Direction):
+    steps_per_turn = 1
+
+    def __init__(self, some_id, direction: Direction):
         self._direction = direction
+        self.steps_left = 0
+        self.some_id = some_id
 
     @property
     def direction_signed_1(self):
@@ -14,14 +18,8 @@ class Player(ABC):
         else:
             return 1
 
-    @abstractmethod
     def turn_started(self):
-        """ Turn-controller* should call this. """
-        pass
+        self.steps_left = Player.steps_per_turn
 
-    @abstractmethod
     def is_finished_turn(self) -> bool:
-        """ Turn-controller*  should check this."""
-        pass
-
-    # *probably specific state of game
+        return self.steps_left == 0
