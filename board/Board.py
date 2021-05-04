@@ -65,3 +65,5 @@ class Board:
         return SimplifiedBoard(tuple(tuple(self.fields[x][y].get_occupation_type(player)
                                            for y in range(Board.SIZE))
                                      for x in range(Board.SIZE)))
+
+    def info_for_networking(self):
