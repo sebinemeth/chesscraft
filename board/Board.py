@@ -67,3 +67,7 @@ class Board:
                                      for x in range(Board.SIZE)))
 
     def info_for_networking(self):
+        thelist = []
+        for i in range(Board.SIZE):
+            for j in range(Board.SIZE):
+                pass #thelist.append(self.fields.)

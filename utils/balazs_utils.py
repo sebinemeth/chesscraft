@@ -85,3 +85,6 @@ def possible_attacks_one_step(field: (int, int), directions: List[(int, int)],
         if is_enemy_field(*candidate, simple_board):
             ret.append(candidate)
     return ret
+
+
+print("afadfs" + 1)

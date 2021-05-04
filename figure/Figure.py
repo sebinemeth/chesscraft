@@ -29,3 +29,7 @@ class Figure(ABC):
     @abstractmethod
     def collect_possible_attacks(self, simple_board: SimplifiedBoard) -> List[(int, int)]:
         """ Retrieves the list of field positions, where it can attack. """
+
+    #@abstractmethod
+    #def get_all_data(self):
+    #    """ retrives a string with all the information it for networking """

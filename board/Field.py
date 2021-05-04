@@ -28,3 +28,6 @@ class Field:
                 return FieldOccupation.FRIENDLY
             else:
                 return FieldOccupation.ENEMY
+
+    def get_all_data(self):
+        pass

@@ -27,3 +27,6 @@ class Peasant(Figure):
         if is_enemy_field(candidate_x, candidate_y, simple_board):
             ret.append((candidate_x, candidate_y))
         return ret
+
+    def get_all_data(self):
+        return "P" + self.x + self.y;
