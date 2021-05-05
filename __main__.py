@@ -5,7 +5,7 @@ from game.Game import Game
 def main():
     """" The main function of the game. """
     FPS = 30
-
+    game = Game()
     pg.init()  # initializes pyGame
     clock = pg.time.Clock()
     while "Alma":

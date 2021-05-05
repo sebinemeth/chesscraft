@@ -8,7 +8,8 @@ from figure.Figure import Figure
 class ChoosingDestinationState(AbstractBoardState):
     """ Handles simple moving/attacking. """
     def __init__(self, board):
-        super(AbstractBoardState, self).__init__(board)
+        super(AbstractBoardState, self).__init__()
+        self._board = board
         self.__possible_steps = []
         self.__possible_attacks = []
         self.__chosen_x = -1

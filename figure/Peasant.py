@@ -8,7 +8,8 @@ from typing import List
 
 class Peasant(Figure):
     def __init__(self, owner: Player):
-        super(Figure, self).__init__(owner)
+        super(Figure, self).__init__()
+        self.owner = owner
 
     def collect_possible_steps(self, simple_board: SimplifiedBoard): #-> List[(int, int)]:
         if simple_board[self.x + self.owner.direction_signed_1][self.y] == FieldOccupation.EMPTY:
