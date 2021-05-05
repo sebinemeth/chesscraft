@@ -5,9 +5,11 @@ from game.Game import Game
 def main():
     """" The main function of the game. """
     FPS = 30
-    game = Game()
     pg.init()  # initializes pyGame
     clock = pg.time.Clock()
+
+    # itt a board: Game.get_instance().board
+
     while "Alma":
         # update "roots" & pass all the events for handling (it should be chained further to lesser interested objects)
         # they can ask for exit by returning False
