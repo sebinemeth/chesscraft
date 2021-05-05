@@ -1,3 +1,4 @@
+import json
 import threading
 import time
 
@@ -35,8 +36,8 @@ def network_thread(some_param):
     while run:
 
         if my_turn:
-            state = Game.get_instance().board.export_json()
-            req = StepCommand(str(state))
+            state_json = json.dumps(Game.get_instance().board.export_state())
+            req = StepCommand(state_json)
         else:
             req = PingCommand()
 
@@ -50,6 +51,10 @@ def network_thread(some_param):
                 my_turn = True
             else:
                 my_turn = False
+
+            new_state_json = res.payload[10:]
+            if len(new_state_json) > 0:
+                Game.get_instance().board.import_state(json.loads(new_state_json))
 
         elif res.type == CommandType.WAIT:
             pass

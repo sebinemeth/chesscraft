@@ -64,13 +64,14 @@ class Board:
                                            for y in range(Board.SIZE))
                                      for x in range(Board.SIZE)))
 
-    def export_json(self):
-        json = []
+    def export_state(self):
+        json_object = []
         for row in self.fields:
-            json.append([])
+            json_object.append([])
             for field in row:
-                json[-1].append(field.export_json())
-        return json
+                json_object[-1].append(field.export_state())
+        return json_object
 
-    def import_json(self):
+    def import_state(self, json_object):
+        # print(f"update state to {json_object}")
         pass  # TODO
