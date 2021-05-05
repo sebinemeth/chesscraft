@@ -29,7 +29,7 @@ class Field:
             else:
                 return FieldOccupation.ENEMY
 
-    def export_json(self):
+    def export_state(self):
         if self.figure is None:
             return None
-        return self.figure.export_json()
+        return self.figure.export_state()

@@ -23,7 +23,7 @@ class Peasant(Figure):
             ret.append((self.x + self.owner.direction_signed_1, self.y - 1))
         return ret
 
-    def export_json(self):
-        d = super().export_json()
+    def export_state(self):
+        d = super().export_state()
         d['figure_name'] = "peasant"
         return d

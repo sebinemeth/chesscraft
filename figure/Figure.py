@@ -29,5 +29,5 @@ class Figure(ABC):
     def collect_possible_attacks(self, simple_board: SimplifiedBoard):  # -> List[(int, int)]:
         """ Retrieves the list of field positions, where it can attack. """
 
-    def export_json(self):
+    def export_state(self):
         return {'player_id': self.owner.id}
