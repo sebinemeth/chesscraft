@@ -1,3 +1,6 @@
+from player.HumanPlayer import HumanPlayer
+from enums.Direction import Direction
+
 class PlayerManager:
     __instance = None
 
@@ -33,9 +36,13 @@ class PlayerManager:
     # endregion
 
     def create_players(self, my_player_id, other_player_id, starting_player_id):
-        """Should be called when starting game."""
+        """Should be called when starting game."""      # TODO not like this
+        self.__my_player = HumanPlayer(Direction.LEFT)
+        self.__other_player = HumanPlayer(Direction.RIGHT)
+        self.__current_player = self.__my_player
         pass
 
     def turn_passed(self):
         """Should be called after each turn."""
         pass
+

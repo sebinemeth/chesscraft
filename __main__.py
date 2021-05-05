@@ -1,6 +1,7 @@
 import pygame as pg
 from Screen import Screen
 from game.Game import Game
+from player.PlayerManager import PlayerManager
 
 def main():
     """" The main function of the game. """
@@ -8,6 +9,10 @@ def main():
 
     pg.init()  # initializes pyGame
     clock = pg.time.Clock()
+
+    PlayerManager.get_instance()
+    PlayerManager.get_instance().create_players(1, 2, 1)
+
     while "Alma":
         # update "roots" & pass all the events for handling (it should be chained further to lesser interested objects)
         # they can ask for exit by returning False

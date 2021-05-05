@@ -17,6 +17,7 @@ class Board:
         self.fields = tuple(tuple(Field(x, y) for y in range(Board.SIZE)) for x in range(Board.SIZE))
 
         for i in range(Board.SIZE):  # TODO this is not good yet
+            #print(type(PlayerManager.get_instance().my_player))
             self.fields[1][i].add_figure(Peasant(PlayerManager.get_instance().my_player))
             self.fields[Board.SIZE - 1][i].add_figure(Peasant(PlayerManager.get_instance().other_player))
             # TODO add figures other figures to fields
