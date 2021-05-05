@@ -1,17 +1,15 @@
+import sys
+
+from board.AbstractBoardState import AbstractBoardState
+from board.ChoosingActingFigureState import ChoosingActingFigureState
+from board.ChoosingDestinationState import ChoosingDestinationState
 from board.Field import Field
-from data_classes.SimplifiedBoard import SimplifiedBoard
+from board.FrozenState import FrozenState
 from data_classes.FigureActOptions import FigureActOptions
-from enums.FieldOccupation import FieldOccupation
-from figure.Figure import Figure
+from data_classes.SimplifiedBoard import SimplifiedBoard
 from figure.Peasant import Peasant
 from player.Player import Player
 from player.PlayerManager import PlayerManager
-from board.AbstractBoardState import AbstractBoardState
-from board.FrozenState import FrozenState
-from board.ChoosingActingFigureState import ChoosingActingFigureState
-from board.ChoosingDestinationState import ChoosingDestinationState
-
-import sys
 
 
 class Board:
@@ -65,3 +63,14 @@ class Board:
         return SimplifiedBoard(tuple(tuple(self.fields[x][y].get_occupation_type(player)
                                            for y in range(Board.SIZE))
                                      for x in range(Board.SIZE)))
+
+    def export_json(self):
+        json = []
+        for row in self.fields:
+            json.append([])
+            for field in row:
+                json[-1].append(field.export_json())
+        return json
+
+    def import_json(self):
+        pass  # TODO

@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import List
 
-from data_classes.SimplifiedBoard import SimplifiedBoard
 from data_classes.FigureActOptions import FigureActOptions
+from data_classes.SimplifiedBoard import SimplifiedBoard
 from player.Player import Player
 
 
@@ -23,9 +22,12 @@ class Figure(ABC):
         return FigureActOptions(True, steps, attacks)
 
     @abstractmethod
-    def collect_possible_steps(self, simple_board: SimplifiedBoard): #-> List[(int, int)]:
+    def collect_possible_steps(self, simple_board: SimplifiedBoard):  # -> List[(int, int)]:
         """ Retrieves the list of field positions, where it can step. """
 
     @abstractmethod
-    def collect_possible_attacks(self, simple_board: SimplifiedBoard): #-> List[(int, int)]:
+    def collect_possible_attacks(self, simple_board: SimplifiedBoard):  # -> List[(int, int)]:
         """ Retrieves the list of field positions, where it can attack. """
+
+    def export_json(self):
+        return {'player_id': self.owner.id}

@@ -1,5 +1,5 @@
-from figure.Figure import Figure
 from enums.FieldOccupation import FieldOccupation
+from figure.Figure import Figure
 from player.Player import Player
 
 
@@ -28,3 +28,8 @@ class Field:
                 return FieldOccupation.FRIENDLY
             else:
                 return FieldOccupation.ENEMY
+
+    def export_json(self):
+        if self.figure is None:
+            return None
+        return self.figure.export_json()

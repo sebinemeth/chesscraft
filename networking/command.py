@@ -51,6 +51,6 @@ class PingCommand(Command):
 
 
 class StepCommand(Command):
-    def __init__(self):
+    def __init__(self, state):
         self.type = CommandType.STEP
-        self.payload = ""
+        self.payload = state

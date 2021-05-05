@@ -1,9 +1,7 @@
-from figure.Figure import Figure
 from data_classes.SimplifiedBoard import SimplifiedBoard
 from enums.FieldOccupation import FieldOccupation
+from figure.Figure import Figure
 from player.Player import Player
-
-from typing import List
 
 
 class Peasant(Figure):
@@ -17,10 +15,15 @@ class Peasant(Figure):
         else:
             return []
 
-    def collect_possible_attacks(self, simple_board: SimplifiedBoard): #-> List[(int, int)]:
+    def collect_possible_attacks(self, simple_board: SimplifiedBoard):  # -> List[(int, int)]:
         ret = []
         if simple_board[self.x + self.owner.direction_signed_1][self.y + 1] == FieldOccupation.ENEMY:
             ret.append((self.x + self.owner.direction_signed_1, self.y + 1))
         if simple_board[self.x + self.owner.direction_signed_1][self.y - 1] == FieldOccupation.ENEMY:
             ret.append((self.x + self.owner.direction_signed_1, self.y - 1))
         return ret
+
+    def export_json(self):
+        d = super().export_json()
+        d['figure_name'] = "peasant"
+        return d

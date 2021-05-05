@@ -23,3 +23,7 @@ class Player(ABC):
 
     def is_finished_turn(self) -> bool:
         return self.steps_left == 0
+
+    @property
+    def id(self):
+        return self.some_id
