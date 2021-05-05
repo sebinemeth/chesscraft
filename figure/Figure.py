@@ -23,9 +23,9 @@ class Figure(ABC):
         return FigureActOptions(True, steps, attacks)
 
     @abstractmethod
-    def collect_possible_steps(self, simple_board: SimplifiedBoard) -> List[(int, int)]:
+    def collect_possible_steps(self, simple_board: SimplifiedBoard): #-> List[(int, int)]:
         """ Retrieves the list of field positions, where it can step. """
 
     @abstractmethod
-    def collect_possible_attacks(self, simple_board: SimplifiedBoard) -> List[(int, int)]:
+    def collect_possible_attacks(self, simple_board: SimplifiedBoard): #-> List[(int, int)]:
         """ Retrieves the list of field positions, where it can attack. """

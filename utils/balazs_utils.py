@@ -12,21 +12,21 @@ def in_board(x, y) -> bool:
 
 
 def is_empty_field(x, y, simple_board: SimplifiedBoard) -> bool:
-    if in_board(x, y) and simple_board[x][y] == FieldOccupation.EMPTY:
+    if in_board(x, y) and simple_board.fields[x][y] == FieldOccupation.EMPTY:
         return True
     else:
         return False
 
 
-def is_enemy_field(field: (int, int), simple_board: SimplifiedBoard) -> bool:
-    if in_board(x, y) and simple_board[x][y] == FieldOccupation.ENEMY:
+def is_enemy_field(x, y, simple_board: SimplifiedBoard) -> bool:
+    if in_board(x, y) and simple_board.fields[x][y] == FieldOccupation.ENEMY:
         return True
     else:
         return False
 
 
-def possible_fields_long_step(field: (int, int), directions: List[(int, int)],
-                              simple_board: SimplifiedBoard) -> List[(int, int)]:
+def possible_fields_long_step(field: (int, int), directions,
+                              simple_board: SimplifiedBoard):  # -> List[(int, int)]:
     """
         :return: coordinates of empty fields in the directions of "additions" until a not empty field
                  or the edge of the board
@@ -41,8 +41,8 @@ def possible_fields_long_step(field: (int, int), directions: List[(int, int)],
     return ret
 
 
-def possible_attacks_long_step(field: (int, int), directions: List[(int, int)],
-                               simple_board: SimplifiedBoard) -> List[(int, int)]:
+def possible_attacks_long_step(field: (int, int), directions,
+                               simple_board: SimplifiedBoard):   # -> List[(int, int)]:
     """
         :return: coordinates of the first enemy fields in the directions of "additions"
         :rtype: List[(int, int)]
@@ -57,8 +57,8 @@ def possible_attacks_long_step(field: (int, int), directions: List[(int, int)],
     return ret
 
 
-def possible_fields_one_step(field: (int, int), directions: List[(int, int)],
-                             simple_board: SimplifiedBoard) -> List[(int, int)]:
+def possible_fields_one_step(field: (int, int), directions,
+                             simple_board: SimplifiedBoard):  # -> List[(int, int)]:
     """
         :return: coordinates of empty fields in the directions of "additions" until a not empty field
                  or the edge of the board
@@ -72,8 +72,8 @@ def possible_fields_one_step(field: (int, int), directions: List[(int, int)],
     return ret
 
 
-def possible_attacks_one_step(field: (int, int), directions: List[(int, int)],
-                              simple_board: SimplifiedBoard) -> List[(int, int)]:
+def possible_attacks_one_step(field: (int, int), directions,
+                              simple_board: SimplifiedBoard):  # -> List[(int, int)]:
     """
         :return: coordinates of empty fields in the directions of "additions" until a not empty field
                  or the edge of the board
