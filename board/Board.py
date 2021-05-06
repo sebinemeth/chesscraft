@@ -10,6 +10,7 @@ from data_classes.SimplifiedBoard import SimplifiedBoard
 from figure.Peasant import Peasant
 from player.Player import Player
 from player.PlayerManager import PlayerManager
+from enums.Direction import Direction
 
 
 class Board:
@@ -22,11 +23,17 @@ class Board:
         self.__choosing_acting_figure_state = ChoosingActingFigureState(self)
         self.__choosing_destination_state = ChoosingDestinationState(self)
         self.fields = tuple(tuple(Field(x, y) for y in range(Board.SIZE)) for x in range(Board.SIZE))
+        if PlayerManager.get_instance().my_player.direction == Direction.LEFT:
+            for i in range(Board.SIZE):  # TODO this is not good yet
+                self.fields[1][i].add_figure(Peasant(PlayerManager.get_instance().my_player))
+                self.fields[Board.SIZE - 2][i].add_figure(Peasant(PlayerManager.get_instance().other_player))
+                # TODO add figures other figures to fields
+        else:
+            for i in range(Board.SIZE):  # TODO this is not good yet
+                self.fields[1][i].add_figure(Peasant(PlayerManager.get_instance().other_player))
+                self.fields[Board.SIZE - 2][i].add_figure(Peasant(PlayerManager.get_instance().my_player))
+                # TODO add figures other figures to fields
 
-        for i in range(Board.SIZE):  # TODO this is not good yet
-            self.fields[1][i].add_figure(Peasant(PlayerManager.get_instance().my_player))
-            self.fields[Board.SIZE - 1][i].add_figure(Peasant(PlayerManager.get_instance().other_player))
-            # TODO add figures other figures to fields
         # TODO refactor the vars below into state?
         self.chosen_field = None  # type: Field
         self.acts = None  # type: FigureActOptions

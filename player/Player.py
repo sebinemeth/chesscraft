@@ -27,3 +27,7 @@ class Player(ABC):
     @property
     def id(self):
         return self.some_id
+
+    @property
+    def direction(self):
+        return self._direction
