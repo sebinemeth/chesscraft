@@ -7,10 +7,11 @@ from board.Field import Field
 from board.FrozenState import FrozenState
 from data_classes.FigureActOptions import FigureActOptions
 from data_classes.SimplifiedBoard import SimplifiedBoard
+from enums.Direction import Direction
+from figure.FigureFactory import FigureFactory
 from figure.Peasant import Peasant
 from player.Player import Player
 from player.PlayerManager import PlayerManager
-from enums.Direction import Direction
 
 
 class Board:
@@ -80,5 +81,15 @@ class Board:
         return json_object
 
     def import_state(self, json_object):
-        # print(f"update state to {json_object}")
-        pass  # TODO
+        for i in range(len(json_object)):
+            for j in range(len(json_object[i])):
+                self.fields[i][j].remove_figure()
+                if json_object[i][j] is not None:
+                    player = PlayerManager.get_instance().my_player
+                    if json_object[i][j]['player_id'] != PlayerManager.get_instance().my_player.id:
+                        player = PlayerManager.get_instance().other_player
+
+                    f = FigureFactory.get_figure(json_object[i][j]['figure_name'], player)
+
+                    if f is not None:
+                        self.fields[i][j].add_figure(f)
