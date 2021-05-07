@@ -1,3 +1,4 @@
+import logging
 import socket
 
 
@@ -16,20 +17,20 @@ class Network:
         self.addr = (self.server, self.port)
         self.id = self.connect()
         self.counter = counter()
-        print(self.id)
+        logging.debug(self.id)
 
     def connect(self):
         try:
             self.client.connect(self.addr)
             return self.client.recv(2048).decode()
         except socket.error as e:
-            print(e)
+            logging.error(e)
 
     def send(self, data):
         try:
             self.client.send(str.encode(data))
             response = self.client.recv(2048).decode()
-            print(f"message #{next(self.counter)}")
+            logging.debug(f"message #{next(self.counter)}")
             return response
         except socket.error as e:
-            print(e)
+            logging.error(e)
