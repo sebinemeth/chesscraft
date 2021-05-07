@@ -1,6 +1,7 @@
 from board.Board import Board
 from player.PlayerManager import PlayerManager
 
+
 class Game:
     __instance = None
 
