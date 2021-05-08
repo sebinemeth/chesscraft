@@ -20,7 +20,6 @@ class Peasant(Figure):
         # TODO: double step from the first row
         return possible_fields_one_step((self.x, self.y), self.step_direction, simple_board)
 
-
     def collect_possible_attacks(self, simple_board: SimplifiedBoard):  # -> List[(int, int)]:
         # ret = []
         # if simple_board[self.x + self.owner.direction_signed_1][self.y + 1] == FieldOccupation.ENEMY:
@@ -30,7 +29,6 @@ class Peasant(Figure):
         # return ret
         # TODO: en_passant
         return possible_attacks_one_step((self.x, self.y), self.attack_direction, simple_board)
-
 
     def export_state(self):
         d = super().export_state()

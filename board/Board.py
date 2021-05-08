@@ -10,6 +10,7 @@ from data_classes.SimplifiedBoard import SimplifiedBoard
 from enums.Direction import Direction
 from figure.FigureFactory import FigureFactory
 from figure.Peasant import Peasant
+from figure.Rook import Rook
 from player.Player import Player
 from player.PlayerManager import PlayerManager
 
@@ -26,18 +27,19 @@ class Board:
         self.fields = tuple(tuple(Field(x, y) for y in range(Board.SIZE)) for x in range(Board.SIZE))
         if PlayerManager.get_instance().my_player.direction == Direction.LEFT:
             for i in range(Board.SIZE):  # TODO this is not good yet
-                self.fields[1][i].add_figure(Peasant(PlayerManager.get_instance().my_player))
-                self.fields[Board.SIZE - 2][i].add_figure(Peasant(PlayerManager.get_instance().other_player))
+                self.fields[1][i].add_figure(Rook(PlayerManager.get_instance().my_player))
+                self.fields[Board.SIZE - 2][i].add_figure(Rook(PlayerManager.get_instance().other_player))
                 # TODO add figures other figures to fields
         else:
             for i in range(Board.SIZE):  # TODO this is not good yet
-                self.fields[1][i].add_figure(Peasant(PlayerManager.get_instance().other_player))
-                self.fields[Board.SIZE - 2][i].add_figure(Peasant(PlayerManager.get_instance().my_player))
+                self.fields[1][i].add_figure(Rook(PlayerManager.get_instance().other_player))
+                self.fields[Board.SIZE - 2][i].add_figure(Rook(PlayerManager.get_instance().my_player))
                 # TODO add figures other figures to fields
 
         # TODO refactor the vars below into state?
         self.chosen_field = None  # type: Field
         self.acts = None  # type: FigureActOptions
+        self.transition_to(self.choosing_acting_figure_state)
 
     @property
     def state(self) -> AbstractBoardState:
@@ -58,7 +60,7 @@ class Board:
     # endregion
 
     def field_clicked(self, x: int, y: int):
-        self.state.field_clicked(x, y)
+        return self.state.field_clicked(x, y)
 
     def transition_to(self, state: AbstractBoardState, **messages):
         try:

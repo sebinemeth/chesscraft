@@ -12,4 +12,8 @@ class ChoosingActingFigureState(AbstractBoardState):
             self._board.transition_to(self._board.choosing_destination_state,
                                       possible_steps=acts.possible_steps, possible_attacks=acts.possible_attacks,
                                       chosen_x=x, chosen_y=y)
-            # TODO return acts to GUI
+            return acts
+        return None
+
+    def type_of_state(self):
+        return 'choosing_figure'

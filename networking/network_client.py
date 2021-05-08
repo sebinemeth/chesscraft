@@ -4,9 +4,9 @@ import sys
 import threading
 import time
 
-from command import *
+from networking.command import *
 from game.Game import Game
-from network import Network
+from networking.network import Network
 from player.PlayerManager import PlayerManager
 
 
@@ -78,3 +78,4 @@ if __name__ == '__main__':
             logging.basicConfig(level=logging.DEBUG)
 
     run_network_thread()
+

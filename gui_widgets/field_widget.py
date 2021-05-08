@@ -20,5 +20,5 @@ class FieldWidget(Button):
     def reset_color(self):
         self.color = self.original_color
 
-    def drawFigure(self, screen, figure):
+    def draw_figure(self, screen, figure):
         pygame.draw.rect(screen, [0, 150, 150], [self.x+5, self.y+5, 40, 40])
