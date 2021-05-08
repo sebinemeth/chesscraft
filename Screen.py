@@ -70,6 +70,7 @@ class Screen:
             text_rect = WAITING_TEXT.get_rect(center=(screen_width / 2, screen_height / 3))
             screen.blit(WAITING_TEXT, text_rect)
         else:
+            pygame.draw.rect(screen, (18, 60, 105), (140, 80, 440, 440))
             board = Game.get_instance().board
             if board.state.type_of_state == 'frozen:':
                 screen_width, screen_height = pygame.display.get_surface().get_size()

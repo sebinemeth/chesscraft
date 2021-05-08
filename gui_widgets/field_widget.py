@@ -2,8 +2,8 @@ from gui_widgets.button import Button
 import pygame
 
 FIELD_SIZE = 50
-SIDE_MARGIN = 100
-TOP_MARGIN = 70
+SIDE_MARGIN = 160
+TOP_MARGIN = 100
 
 
 class FieldWidget(Button):
@@ -21,4 +21,8 @@ class FieldWidget(Button):
         self.color = self.original_color
 
     def draw_figure(self, screen, figure):
-        pygame.draw.rect(screen, [0, 150, 150], [self.x+5, self.y+5, 40, 40])
+        if figure.owner.id == 0:
+            color = [0, 150, 150]
+        else:
+            color = [150, 150, 0]
+        pygame.draw.rect(screen, color, [self.x+5, self.y+5, 40, 40])
