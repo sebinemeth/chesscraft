@@ -13,6 +13,10 @@ class AbstractBoardState(ABC):
             GUI may filter out irrelevant field clicks."""
         pass
 
+    @abstractmethod
+    def type_of_state(self):
+        pass
+
     def reset(self, **messages):
         """ Reset member fields based on @messages.
             Called before transitioning to state. """

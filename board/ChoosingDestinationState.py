@@ -17,9 +17,11 @@ class ChoosingDestinationState(AbstractBoardState):
 
     def reset(self, **messages):
         self.__possible_steps = messages["possible_steps"]
-        self.__possible_steps = messages["possible_acts"]
+        self.__possible_attacks = messages["possible_attacks"]
         self.__chosen_x = messages["chosen_x"]
         self.__chosen_y = messages["chosen_y"]
+        self._board.chosen_field = self.field_xy(messages["chosen_x"], messages["chosen_y"])
+        self._board.acts = FigureActOptions(True, messages["possible_steps"], messages["possible_attacks"])
 
     def field_clicked(self, x: int, y: int):
         chosen_field = self.field_xy(self.__chosen_x, self.__chosen_y)
@@ -34,3 +36,7 @@ class ChoosingDestinationState(AbstractBoardState):
             clicked_field.add_figure(chosen_fig)  # occupy new field
             chosen_field.remove_figure()  # abandon old field
         self._board.transition_to(self._board.choosing_acting_figure_state)  # TODO somehow count player steps
+        return None
+
+    def type_of_state(self):
+        return "choosing_destination"
