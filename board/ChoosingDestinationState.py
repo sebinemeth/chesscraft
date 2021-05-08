@@ -29,9 +29,11 @@ class ChoosingDestinationState(AbstractBoardState):
         occupation = clicked_field.get_occupation_type(PlayerManager.get_instance().my_player)
         chosen_fig = chosen_field.figure
         if occupation == FieldOccupation.EMPTY and (x, y) in self.__possible_steps:  # step
+            chosen_field.figure.has_not_moved_yet = False
             clicked_field.add_figure(chosen_fig)  # occupy new field
             chosen_field.remove_figure()  # abandon old field
         elif occupation == FieldOccupation.ENEMY and (x, y) in self.__possible_attacks:  # attack
+            chosen_field.figure.has_not_moved_yet = False
             clicked_field.remove_figure()  # killing figure there
             clicked_field.add_figure(chosen_fig)  # occupy new field
             chosen_field.remove_figure()  # abandon old field
