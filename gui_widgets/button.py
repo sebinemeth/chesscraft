@@ -24,10 +24,10 @@ class Button:
                      (self.x + (self.width / 2 - text.get_width() / 2),
                       self.y + (self.height / 2 - text.get_height() / 2)))
 
-    def is_over(self, xpos, ypos):
+    def is_over(self, pos):
         # Pos is the mouse position or a tuple of (x,y) coordinates
-        if self.x < xpos < self.x + self.width:
-            if self.y < ypos < self.y + self.height:
+        if self.x < pos[0] < self.x + self.width:
+            if self.y < pos[1] < self.y + self.height:
                 return True
 
         return False

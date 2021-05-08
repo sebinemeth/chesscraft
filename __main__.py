@@ -17,7 +17,8 @@ def main():
         # update "roots" & pass all the events for handling (it should be chained further to lesser interested objects)
         # they can ask for exit by returning False
         events, pressed_keys = pg.event.get(), pg.key.get_pressed()
-        if not Screen.get_instance().update(events, pressed_keys):
+        Screen.get_instance().update(screen)
+        if not Screen.get_instance().handle(events, pressed_keys):
             break
         clock.tick(1000//FPS)
     pg.quit()
