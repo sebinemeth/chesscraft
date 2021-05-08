@@ -3,6 +3,7 @@ from data_classes.FigureActOptions import FigureActOptions
 from player.PlayerManager import PlayerManager
 from enums.FieldOccupation import FieldOccupation
 from figure.Figure import Figure
+from player.AIPlayer import AIPlayer
 
 
 class ChoosingDestinationState(AbstractBoardState):
@@ -32,11 +33,15 @@ class ChoosingDestinationState(AbstractBoardState):
             chosen_field.figure.has_not_moved_yet = False
             clicked_field.add_figure(chosen_fig)  # occupy new field
             chosen_field.remove_figure()  # abandon old field
+            if isinstance(PlayerManager.get_instance().other_player, AIPlayer):
+                PlayerManager.get_instance().other_player.turn_started(self._board)
         elif occupation == FieldOccupation.ENEMY and (x, y) in self.__possible_attacks:  # attack
             chosen_field.figure.has_not_moved_yet = False
             clicked_field.remove_figure()  # killing figure there
             clicked_field.add_figure(chosen_fig)  # occupy new field
             chosen_field.remove_figure()  # abandon old field
+            if isinstance(PlayerManager.get_instance().other_player, AIPlayer):
+                PlayerManager.get_instance().other_player.turn_started(self._board)
         self._board.transition_to(self._board.choosing_acting_figure_state)  # TODO somehow count player steps
         return None
 

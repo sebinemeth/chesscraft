@@ -1,6 +1,7 @@
 import pygame as pg
 from Screen import Screen
 import networking.network_client as client
+from player.PlayerManager import PlayerManager
 
 
 
@@ -10,7 +11,11 @@ def main():
     pg.init()  # initializes pyGame
     clock = pg.time.Clock()
 
-    client.run_network_thread()
+    #client.run_network_thread()
+    pm = PlayerManager.get_instance()
+    pm.add_own_player_id(0)
+    pm.add_other_player_id(1)
+    pm.create_players(1, False)
 
     # itt a board: Game.get_instance().board
     res = (720, 720)

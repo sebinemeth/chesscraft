@@ -18,7 +18,7 @@ class Player(ABC):
         else:
             return 1
 
-    def turn_started(self):
+    def turn_started(self, board):
         self.steps_left = Player.steps_per_turn
 
     def is_finished_turn(self) -> bool:
