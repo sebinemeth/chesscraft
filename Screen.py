@@ -6,12 +6,57 @@ from player.PlayerManager import PlayerManager
 from data_classes.FigureActOptions import FigureActOptions
 
 
+STEP_COLOR = (100, 155, 0)
+ATTACK_COLOR = (230, 80, 0)
+SELECT_COLOR = (120, 250, 120)
+KERNEL_COLOR = (20, 60, 100)
+KERNEL_RECTANGLE = (140, 80, 440, 440)
+
+
 def gui_log(func):
     def console_log(*args, **kwargs):
         print(f'Screen log: {func.__name__} with parameters: ', end='')
         print(args)
         return func(*args, **kwargs)
     return console_log
+
+
+def get_players():
+    my_player = PlayerManager.get_instance().my_player
+    other_player = PlayerManager.get_instance().other_player
+    return [my_player, other_player]
+
+
+def font():
+    return pygame.font.Font('freesansbold.ttf', 32)
+
+
+def screen_size():
+    return pygame.display.get_surface().get_size()
+
+
+def waiting_for_opponent_text(screen):
+    text = font().render('Waiting for a worthy opponent', True, KERNEL_COLOR)
+    text_rect = text.get_rect(center=(screen_size()[0] / 2, screen_size()[1] / 3))
+    screen.blit(text, text_rect)
+
+
+def opponents_turn_text(screen):
+    text = font().render('Opponent\'s turn...', True, KERNEL_COLOR)
+    text_rect = text.get_rect(center=(screen_size()[0] / 2, 40))
+    screen.blit(text, text_rect)
+
+
+def choose_figure_text(screen):
+    text = font().render('Choose a figure', True, KERNEL_COLOR)
+    text_rect = text.get_rect(center=(screen_size()[0] / 2, 40))
+    screen.blit(text, text_rect)
+
+
+def choose_action_text(screen):
+    text = font().render('Move: green, Attack: red', True, KERNEL_COLOR)
+    text_rect = text.get_rect(center=(screen_size()[0] / 2, 40))
+    screen.blit(text, text_rect)
 
 
 class Screen:
@@ -57,39 +102,31 @@ class Screen:
 
     def update(self, screen, mouse):
         if not self.ready:
-            my_player = PlayerManager.get_instance().my_player
-            other_player = PlayerManager.get_instance().other_player
-            if my_player is not None and other_player is not None:
+            if get_players()[0] is not None and get_players()[1] is not None:
                 self.set_ready(True)
                 self.init_fields()
 
         if not self.ready:
-            screen_width, screen_height = pygame.display.get_surface().get_size()
-            FONT = pygame.font.Font('freesansbold.ttf', 32)
-            WAITING_TEXT = FONT.render('Waiting for other player...', True, (0, 0, 50))
-            text_rect = WAITING_TEXT.get_rect(center=(screen_width / 2, screen_height / 3))
-            screen.blit(WAITING_TEXT, text_rect)
+            waiting_for_opponent_text(screen)
         else:
-            pygame.draw.rect(screen, (18, 60, 105), (140, 80, 440, 440))
+            pygame.draw.rect(screen, KERNEL_COLOR, KERNEL_RECTANGLE)
             board = Game.get_instance().board
             if board.state.type_of_state == 'frozen:':
-                screen_width, screen_height = pygame.display.get_surface().get_size()
-                FONT = pygame.font.Font('freesansbold.ttf', 32)
-                OTHER_TURN_TEXT = FONT.render('Opponent\'s turn...', True, (0, 0, 50))
-                text_rect = OTHER_TURN_TEXT.get_rect(center=(screen_width / 2, 10))
-                screen.blit(OTHER_TURN_TEXT, text_rect)
+                opponents_turn_text(screen)
             board_fields = board.fields
             for x in range(len(board_fields)):
                 for y in range(len(board_fields[0])):
                     self.fields[x][y].reset_color()
                     if board.state.type_of_state() == 'choosing_figure':
+                        choose_figure_text(screen)
                         if self.fields[x][y].is_over(mouse):
-                            self.fields[x][y].set_color([120, 250, 120])
+                            self.fields[x][y].set_color(SELECT_COLOR)
                     if board.state.type_of_state() == 'choosing_destination':
+                        choose_action_text(screen)
                         if self.__steps is not None and (x, y) in self.__steps:
-                            self.fields[x][y].set_color([100, 155, 0])
+                            self.fields[x][y].set_color(STEP_COLOR)
                         if self.__attacks is not None and (x, y) in self.__attacks:
-                            self.fields[x][y].set_color([230, 80, 0])
+                            self.fields[x][y].set_color(ATTACK_COLOR)
                     self.fields[x][y].draw(screen)
                     if board_fields[x][y].figure is not None:
                         self.fields[x][y].draw_figure(screen, board_fields[x][y].figure)
