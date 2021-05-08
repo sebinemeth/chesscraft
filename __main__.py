@@ -9,6 +9,9 @@ def main():
     clock = pg.time.Clock()
 
     # itt a board: Game.get_instance().board
+    res = (720, 720)
+
+    screen = pg.display.set_mode(res)  # init screen
 
     while "Alma":
         # update "roots" & pass all the events for handling (it should be chained further to lesser interested objects)
