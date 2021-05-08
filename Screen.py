@@ -35,6 +35,10 @@ def screen_size():
     return pygame.display.get_surface().get_size()
 
 
+def delete_top_text(screen):
+    pygame.draw.rect(screen, (250, 250, 250), (0, 0, screen_size()[0], 80))
+
+
 def waiting_for_opponent_text(screen):
     text = font().render('Waiting for a worthy opponent', True, KERNEL_COLOR)
     text_rect = text.get_rect(center=(screen_size()[0] / 2, screen_size()[1] / 3))
@@ -42,18 +46,21 @@ def waiting_for_opponent_text(screen):
 
 
 def opponents_turn_text(screen):
+    delete_top_text(screen)
     text = font().render('Opponent\'s turn...', True, KERNEL_COLOR)
     text_rect = text.get_rect(center=(screen_size()[0] / 2, 40))
     screen.blit(text, text_rect)
 
 
 def choose_figure_text(screen):
+    delete_top_text(screen)
     text = font().render('Choose a figure', True, KERNEL_COLOR)
     text_rect = text.get_rect(center=(screen_size()[0] / 2, 40))
     screen.blit(text, text_rect)
 
 
 def choose_action_text(screen):
+    delete_top_text(screen)
     text = font().render('Move: green, Attack: red', True, KERNEL_COLOR)
     text_rect = text.get_rect(center=(screen_size()[0] / 2, 40))
     screen.blit(text, text_rect)
@@ -105,11 +112,14 @@ class Screen:
             if get_players()[0] is not None and get_players()[1] is not None:
                 self.set_ready(True)
                 self.init_fields()
+                bg = pygame.image.load("images/bg.png")
+                screen.blit(bg, (0, 0))
+                pygame.draw.rect(screen, KERNEL_COLOR, KERNEL_RECTANGLE)
 
         if not self.ready:
             waiting_for_opponent_text(screen)
         else:
-            pygame.draw.rect(screen, KERNEL_COLOR, KERNEL_RECTANGLE)
+            # pygame.draw.rect(screen, KERNEL_COLOR, KERNEL_RECTANGLE)
             board = Game.get_instance().board
             if board.state.type_of_state == 'frozen:':
                 opponents_turn_text(screen)

@@ -16,9 +16,9 @@ def main():
 
     screen = pg.display.set_mode(res)  # init screen
     bg = pg.image.load("images/bg.png")
-
+    screen.blit(bg, (0, 0))
     while True:
-        screen.blit(bg, (0, 0))
+        # screen.blit(bg, (0, 0))
         # update "roots" & pass all the events for handling (it should be chained further to lesser interested objects)
         # they can ask for exit by returning False
         events = pg.event.get()
