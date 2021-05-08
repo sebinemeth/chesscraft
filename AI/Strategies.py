@@ -1,4 +1,6 @@
 import random
+from enums.FieldOccupation import FieldOccupation
+
 
 def attack(starting_field, target_field):
     target_field.remove_figure()

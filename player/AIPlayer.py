@@ -1,7 +1,5 @@
-from enums.FieldOccupation import FieldOccupation
 from player.Player import Player
 from AI.Strategies import randomly_attack
-
 
 
 class AIPlayer(Player):

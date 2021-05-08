@@ -11,7 +11,8 @@ def main():
     pg.init()  # initializes pyGame
     clock = pg.time.Clock()
 
-    #client.run_network_thread()
+    # client.run_network_thread()
+
     pm = PlayerManager.get_instance()
     pm.add_own_player_id(0)
     pm.add_other_player_id(1)
