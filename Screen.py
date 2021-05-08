@@ -1,4 +1,6 @@
 # TODO possibly refactor this to some GUI system
+from gui_widgets.board_widget import BoardWidget
+
 class Screen:
     __instance = None
 
@@ -16,5 +18,7 @@ class Screen:
         else:
             Screen.__instance = self
 
-    def update(self, events, pressed_keys) -> bool:
-        return True
+    def update(self, screen, events, pressed_keys) -> bool:
+        self.board.draw(screen)
+
+
