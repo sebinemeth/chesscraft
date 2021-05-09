@@ -8,6 +8,7 @@ from player.Player import Player
 class Peasant(Figure):
     def __init__(self, owner: Player):
         super(Figure, self).__init__()
+        self.has_not_moved_yet = True
         self.owner = owner
         self.step_direction = [(self.owner.direction_signed_1, 0)]
         self.attack_direction = [(self.owner.direction_signed_1, 1), (self.owner.direction_signed_1, -1)]
@@ -18,8 +19,10 @@ class Peasant(Figure):
         # else:
         #     return []
         # TODO: double step from the first row
+        if self.has_not_moved_yet:
+            init_step_direction = [(self.owner.direction_signed_1, 0), (self.owner.direction_signed_1*2, 0)]
+            return possible_fields_one_step((self.x, self.y), init_step_direction, simple_board)
         return possible_fields_one_step((self.x, self.y), self.step_direction, simple_board)
-
 
     def collect_possible_attacks(self, simple_board: SimplifiedBoard):  # -> List[(int, int)]:
         # ret = []
@@ -30,7 +33,6 @@ class Peasant(Figure):
         # return ret
         # TODO: en_passant
         return possible_attacks_one_step((self.x, self.y), self.attack_direction, simple_board)
-
 
     def export_state(self):
         d = super().export_state()

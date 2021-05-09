@@ -1,5 +1,11 @@
 from data_classes.SimplifiedBoard import SimplifiedBoard
 from enums.FieldOccupation import FieldOccupation
+# from figure.Peasant import Peasant
+# from figure.Rook import Rook
+# from figure.Queen import Queen
+# from figure.Bishop import Bishop
+# from figure.Knight import Knight
+# from figure.King import King
 from typing import List
 import numpy as np
 
@@ -85,3 +91,32 @@ def possible_attacks_one_step(field: (int, int), directions,
         if is_enemy_field(*candidate, simple_board):
             ret.append(candidate)
     return ret
+
+
+def figure_color(figure):
+    color_a = 0
+    color_b = 0
+    figure_type = figure.export_state()['figure_name']
+    if figure_type == 'peasant':
+        color_a = 80
+        color_b = 150
+    if figure_type == 'knight':
+        color_a = 100
+        color_b = 100
+    if figure_type == 'bishop':
+        color_a = 150
+        color_b = 100
+    if figure_type == 'rook':
+        color_a = 200
+        color_b = 100
+    if figure_type == 'queen':
+        color_a = 250
+        color_b = 100
+    if figure_type == 'king':
+        color_a = 250
+        color_b = 200
+
+    if figure.owner.id == 0:
+        return [color_a, color_b, 200]
+    else:
+        return [color_a, color_b, 50]

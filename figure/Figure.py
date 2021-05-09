@@ -7,6 +7,7 @@ from player.Player import Player
 
 class Figure(ABC):
     def __init__(self, owner: Player):
+        self.has_not_moved_yet = True
         self.owner = owner
         # Parent field should handle position.
         self.x = -1

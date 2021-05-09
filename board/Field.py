@@ -18,7 +18,9 @@ class Field:
         self._figure.set_position(self.x, self.y)
 
     def remove_figure(self):
+        f = self._figure
         self._figure = None
+        return f
 
     def get_occupation_type(self, player: Player) -> FieldOccupation:
         if self._figure is None:

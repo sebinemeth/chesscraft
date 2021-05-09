@@ -4,9 +4,9 @@ import sys
 import threading
 import time
 
-from command import *
 from game.Game import Game
-from network import Network
+from networking.command import *
+from networking.network import Network
 from player.PlayerManager import PlayerManager
 
 
@@ -20,7 +20,6 @@ def network_thread(some_param):
 
     game_is_on = False
     my_id = None
-    my_turn = False
 
     req = HelloCommand()
     res = Command.parse(n.send(req.print()))
@@ -30,16 +29,24 @@ def network_thread(some_param):
         my_id = int(res.payload[7:])
         logging.info(f"i am {my_id}")
 
-    pm.add_own_player_id(my_id)
-    pm.add_other_player_id(1 - my_id)
-
-    pm.create_players(0)
-
     while run:
 
-        if my_turn:
-            state_json = json.dumps(Game.get_instance().board.export_state())
-            req = StepCommand(state_json)
+        if game_is_on:
+            if Game.get_instance().is_quit():
+                print("Game is over, network thread exiting")
+                break
+
+            if pm.get_instance().my_turn():
+                if Game.get_instance().board.state.type_of_state() == 'frozen':
+                    # player chose action, we can send it to the network
+                    state_json = json.dumps(Game.get_instance().board.export_state())
+                    req = StepCommand(state_json)
+                else:
+                    # player is choosing figure and destination
+                    time.sleep(.5)
+                    continue
+            else:
+                req = PingCommand()
         else:
             req = PingCommand()
 
@@ -48,22 +55,38 @@ def network_thread(some_param):
 
         if res.type == CommandType.STATE:
             game_is_on = True
-            if int(res.payload[8:9]) == my_id:
-                logging.info("my turn")
-                my_turn = True
-            else:
-                my_turn = False
+
+            if pm.get_instance().my_player is None:
+                pm.add_own_player_id(my_id)
+                pm.add_other_player_id(1 - my_id)
+
+                pm.create_players(0)
 
             new_state_json = res.payload[10:]
-            if len(new_state_json) > 0:
-                Game.get_instance().board.import_state(json.loads(new_state_json))
+            new_state = None
+            try:
+                if len(new_state_json) > 0:
+                    new_state = json.loads(new_state_json)
+            except Exception as e:
+                logging.error(f"json decode error {e}")
+                continue
+
+            if int(res.payload[8:9]) == my_id:
+                logging.info("my turn")
+                pm.get_instance().turn_of(my_id)
+                Game.get_instance().board.transition_to(Game.get_instance().board.choosing_acting_figure_state)
+            else:
+                pm.get_instance().turn_of(1 - my_id)
+
+            if len(new_state_json) > 0 and new_state is not None:
+                Game.get_instance().board.import_state(new_state)
 
         elif res.type == CommandType.WAIT:
             pass
         else:
             logging.warning("unexpected message")
 
-        time.sleep(5)
+        time.sleep(1)
 
 
 def run_network_thread():
@@ -78,3 +101,4 @@ if __name__ == '__main__':
             logging.basicConfig(level=logging.DEBUG)
 
     run_network_thread()
+
