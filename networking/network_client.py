@@ -85,7 +85,8 @@ def network_thread(some_param):
             pass
 
         elif res.type == CommandType.ERROR:
-            continue
+            print("recieved error")
+            pass
 
         else:
             logging.warning("unexpected message")
