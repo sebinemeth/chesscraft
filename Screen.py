@@ -11,7 +11,7 @@ ATTACK_COLOR = (230, 80, 0)
 SELECT_COLOR = (120, 250, 120)
 KERNEL_COLOR = (20, 60, 100)
 KERNEL_RECTANGLE = (140, 80, 440, 440)
-PLAYER_COLOR = ('black', 'white')
+PLAYER_COLOR = ('white', 'black')
 
 
 def font():
@@ -23,6 +23,7 @@ def gui_log(func):
         print(f'Screen log: {func.__name__} with parameters: ', end='')
         print(args)
         return func(*args, **kwargs)
+
     return console_log
 
 
@@ -42,7 +43,6 @@ def delete_top_text(screen):
 
 class Screen:
     __instance = None
-
 
     @staticmethod
     def get_instance():
@@ -124,24 +124,24 @@ class Screen:
 
         X, Y = pygame.display.get_surface().get_size()
         if not self.ready:
-            self.update_text(screen, self.__waiting_for_opponent_text, (X//2, Y//3))
+            self.update_text(screen, self.__waiting_for_opponent_text, (X // 2, Y // 3))
             if get_players()[0] is not None and get_players()[1] is not None:
                 self.setup_board(screen, get_players()[0])
         else:
             board = Game.get_instance().board
             if board.state.type_of_state() == 'frozen':
                 X, Y = pygame.display.get_surface().get_size()
-                self.update_text(screen, self.__opponents_turn_text, (X//2, 30))
+                self.update_text(screen, self.__opponents_turn_text, (X // 2, 30))
             board_fields = board.fields
             for x in range(len(board_fields)):
                 for y in range(len(board_fields[0])):
                     self.fields[x][y].reset_color()
                     if board.state.type_of_state() == 'choosing_figure':
-                        self.update_text(screen, self.__choose_figure_text, (X//2, 30))
+                        self.update_text(screen, self.__choose_figure_text, (X // 2, 30))
                         if self.fields[x][y].is_over(mouse):
                             self.fields[x][y].set_color(SELECT_COLOR)
                     if board.state.type_of_state() == 'choosing_destination':
-                        self.update_text(screen, self.__choose_action_text, (X//2, 30))
+                        self.update_text(screen, self.__choose_action_text, (X // 2, 30))
                         if self.__steps is not None and (x, y) in self.__steps:
                             self.fields[x][y].set_color(STEP_COLOR)
                         if self.__attacks is not None and (x, y) in self.__attacks:

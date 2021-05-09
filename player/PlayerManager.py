@@ -71,7 +71,7 @@ class PlayerManager:
         else:
             raise Exception(f"Ostoba! Elszúrtál valamit az id-kkal! Megadott id-k: {self.__player_ids}, "
                             f"kezdő id-ja: {starting_player_id}")
-        self.__current_player.turn_started()
+        # self.__current_player.turn_started()
 
     def turn_passed(self):
         if self.__own_player == self.__current_player:

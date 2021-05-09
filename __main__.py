@@ -6,17 +6,24 @@ import pygame as pg
 import networking.network_client as client
 from Screen import Screen
 from game.Game import Game
+from player.PlayerManager import PlayerManager
 
 
-def main():
+def main(multiplayer=False):
+
     """" The main function of the game. """
     FPS = 60
     pg.init()  # initializes pyGame
     clock = pg.time.Clock()
 
-    logging.basicConfig(level=logging.DEBUG)
-
-    client.run_network_thread()
+    if multiplayer:
+        logging.basicConfig(level=logging.DEBUG)
+        client.run_network_thread()
+    else:
+        pm = PlayerManager.get_instance()
+        pm.add_own_player_id(0)
+        pm.add_other_player_id(1)
+        pm.create_players(0, False)
 
     # itt a board: Game.get_instance().board
     res = (720, 720)
@@ -35,11 +42,16 @@ def main():
         # if Screen.get_instance().handle(events, pressed_keys) returns false the game quits
         if not Screen.get_instance().handle(events, pressed_keys):
             break
-        clock.tick(1000//FPS)
+        clock.tick(1000 // FPS)
         pg.display.update()
     pg.quit()
     Game.get_instance().quit()
 
 
 if __name__ == "__main__":
-    main()
+    print("running with args", sys.argv)
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "singleplayer":
+            main(False)
+    else:
+        main(True)

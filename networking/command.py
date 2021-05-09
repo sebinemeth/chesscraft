@@ -8,6 +8,7 @@ class CommandType(Enum):
     WAIT = "WAIT"
     STEP = "STEP"
     PING = "PING"
+    ERROR = "ERROR"
 
 
 class Command:
@@ -54,3 +55,9 @@ class StepCommand(Command):
     def __init__(self, state=""):
         self.type = CommandType.STEP
         self.payload = state
+
+
+class ErrorCommand(Command):
+    def __init__(self):
+        self.type = CommandType.ERROR
+        self.payload = ""

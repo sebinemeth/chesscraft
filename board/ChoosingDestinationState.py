@@ -1,13 +1,14 @@
 from board.AbstractBoardState import AbstractBoardState
 from data_classes.FigureActOptions import FigureActOptions
+from figure.King import King
 from player.PlayerManager import PlayerManager
 from enums.FieldOccupation import FieldOccupation
 from figure.Figure import Figure
+from player.AIPlayer import AIPlayer
 
 
 class ChoosingDestinationState(AbstractBoardState):
     """ Handles simple moving/attacking. """
-
     def __init__(self, board):
         super(AbstractBoardState, self).__init__()
         self._board = board
@@ -38,13 +39,17 @@ class ChoosingDestinationState(AbstractBoardState):
 
         elif occupation == FieldOccupation.ENEMY and (x, y) in self.__possible_attacks:  # attack
             chosen_field.figure.has_not_moved_yet = False
-            clicked_field.remove_figure()  # killing figure there
+            f = clicked_field.remove_figure()  # killing figure there
+            if isinstance(f, King):
+                print("shit happens")
             clicked_field.add_figure(chosen_fig)  # occupy new field
             chosen_field.remove_figure()  # abandon old field
             action_successful = True
 
         if action_successful:
             self._board.transition_to(self._board.frozen_state)
+            if isinstance(PlayerManager.get_instance().other_player, AIPlayer):
+                PlayerManager.get_instance().other_player.turn_started(self._board)
         else:
             self._board.transition_to(self._board.choosing_acting_figure_state)
         return None
