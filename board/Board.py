@@ -62,7 +62,11 @@ class Board:
         # TODO refactor the vars below into state?
         self.chosen_field = None  # type: Field
         self.acts = None  # type: FigureActOptions
-        self.transition_to(self.choosing_acting_figure_state)
+
+        if PlayerManager.get_instance().my_turn():
+            self.transition_to(self.choosing_acting_figure_state)
+        else:
+            self.transition_to(self.frozen_state)
 
     @property
     def state(self) -> AbstractBoardState:
