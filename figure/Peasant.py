@@ -1,8 +1,7 @@
 from data_classes.SimplifiedBoard import SimplifiedBoard
-from enums.FieldOccupation import FieldOccupation
-from utils.balazs_utils import possible_fields_one_step, possible_attacks_one_step
 from figure.Figure import Figure
 from player.Player import Player
+from utils.balazs_utils import possible_fields_one_step, possible_attacks_one_step
 
 
 class Peasant(Figure):

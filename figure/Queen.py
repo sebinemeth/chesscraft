@@ -1,7 +1,7 @@
-from figure.Figure import Figure
 from data_classes.SimplifiedBoard import SimplifiedBoard
-from utils.balazs_utils import possible_fields_long_step, possible_attacks_long_step
+from figure.Figure import Figure
 from player.Player import Player
+from utils.balazs_utils import possible_fields_long_step, possible_attacks_long_step
 
 
 class Queen(Figure):

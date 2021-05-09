@@ -1,6 +1,6 @@
-from board.Field import Field
-
 from abc import ABC, abstractmethod
+
+from board.Field import Field
 
 
 class AbstractBoardState(ABC):
