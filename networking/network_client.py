@@ -83,6 +83,10 @@ def network_thread(some_param):
 
         elif res.type == CommandType.WAIT:
             pass
+
+        elif res.type == CommandType.ERROR:
+            continue
+
         else:
             logging.warning("unexpected message")
 
