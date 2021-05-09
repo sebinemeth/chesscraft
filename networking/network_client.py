@@ -51,8 +51,8 @@ def network_thread(some_param):
             req = PingCommand()
 
         res_raw = n.send(req.print())
-        if res_raw is None:
-            print("got None")
+        if res_raw is None or res_raw == "":
+            print(f"got: {res_raw}")
             continue
         res = Command.parse(res_raw)
         logging.info(f"=> {res.print()}")
