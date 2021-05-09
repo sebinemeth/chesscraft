@@ -1,10 +1,10 @@
 # TODO possibly refactor this to some GUI system
+import pygame
+
+from data_classes.FigureActOptions import FigureActOptions
 from game.Game import Game
 from gui_widgets.field_widget import FieldWidget
-import pygame
 from player.PlayerManager import PlayerManager
-from data_classes.FigureActOptions import FigureActOptions
-
 
 STEP_COLOR = (100, 155, 0)
 ATTACK_COLOR = (230, 80, 0)
@@ -98,11 +98,9 @@ class Screen:
     def set_ready(self, ready):
         self.__ready = ready
 
-
     def init_fields(self):
         size = Game.get_instance().board.SIZE
         self.__fields = tuple(tuple(FieldWidget(x, y) for y in range(size)) for x in range(size))
-
 
     def set_acts(self, act_options: FigureActOptions):
         if act_options is not None:
@@ -111,6 +109,7 @@ class Screen:
 
     def update(self, screen, mouse):
         if not self.ready:
+            waiting_for_opponent_text(screen)
             if get_players()[0] is not None and get_players()[1] is not None:
                 self.set_ready(True)
                 self.init_fields()
@@ -118,12 +117,10 @@ class Screen:
                 screen.blit(bg, (0, 0))
                 pygame.draw.rect(screen, KERNEL_COLOR, KERNEL_RECTANGLE)
 
-        if not self.ready:
-            waiting_for_opponent_text(screen)
         else:
             # pygame.draw.rect(screen, KERNEL_COLOR, KERNEL_RECTANGLE)
             board = Game.get_instance().board
-            if board.state.type_of_state == 'frozen:':
+            if board.state.type_of_state() == 'frozen':
                 opponents_turn_text(screen)
             board_fields = board.fields
             for x in range(len(board_fields)):

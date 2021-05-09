@@ -17,10 +17,10 @@ class FigureFactory(ABC):
             return Rook(player)
         if figure_type == 'knight':
             return Knight(player)
-        if figure_type == 'bishop':
+        if figure_type == "bishop":
             return Bishop(player)
         if figure_type == 'queen':
             return Queen(player)
         if figure_type == 'king':
             return King(player)
-        return None
+        raise Exception(f'{figure_type} is not a figure type')

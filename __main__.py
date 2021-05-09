@@ -1,20 +1,22 @@
+import logging
 import sys
 
 import pygame as pg
 
+import networking.network_client as client
 from Screen import Screen
+from game.Game import Game
 from player.PlayerManager import PlayerManager
-from networking import network_client as client
-
 
 def main(multiplayer=False):
 
     """" The main function of the game. """
-    FPS = 30
+    FPS = 60
     pg.init()  # initializes pyGame
     clock = pg.time.Clock()
 
     if multiplayer:
+        logging.basicConfig(level=logging.DEBUG)
         client.run_network_thread()
     else:
         pm = PlayerManager.get_instance()
@@ -42,6 +44,7 @@ def main(multiplayer=False):
         clock.tick(1000 // FPS)
         pg.display.update()
     pg.quit()
+    Game.get_instance().quit()
 
 
 if __name__ == "__main__":

@@ -14,6 +14,7 @@ class Game:
 
     def __init__(self):
         """ Virtually private constructor. """
+        self.__quit = False
         if Game.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
@@ -27,3 +28,9 @@ class Game:
     @staticmethod
     def end_turn():
         PlayerManager.get_instance().turn_passed()
+
+    def quit(self):
+        self.__quit = True
+
+    def is_quit(self):
+        return self.__quit
