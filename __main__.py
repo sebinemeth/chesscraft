@@ -1,8 +1,7 @@
 import pygame as pg
-from Screen import Screen
-import networking.network_client as client
-from player.PlayerManager import PlayerManager
 
+from Screen import Screen
+from player.PlayerManager import PlayerManager
 
 
 def main():
