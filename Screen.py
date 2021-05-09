@@ -88,8 +88,6 @@ class Screen:
     def setup_board(self, screen):
         self.set_ready(True)
         self.init_fields()
-        bg = pygame.image.load("images/bg.png")
-        screen.blit(bg, (0, 0))
         pygame.draw.rect(screen, KERNEL_COLOR, KERNEL_RECTANGLE)
 
     def setup_texts(self, screen):
@@ -101,38 +99,27 @@ class Screen:
     def update_text(self, screen, text, center):
         if self.__current_text is not text:
             if self.__current_text is not None:
-                pygame.draw.rect(screen, (250, 250, 250), self.__current_text.get_rect())
+                pygame.draw.rect(screen, (250, 250, 250), (0, 0, 720, 390))
+                pygame.draw.rect(screen, KERNEL_COLOR, KERNEL_RECTANGLE)
             self.__current_text = text
-            text_rect = text.get_rect()
+            text_rect = self.__current_text.get_rect()
             text_rect.center = center
-            screen.blit(text, text_rect)
+            screen.blit(self.__current_text, text_rect)
 
     def update(self, screen, mouse):
         if self.__waiting_for_opponent_text is None:
             self.setup_texts(screen)
 
-        if not self.ready:
-            waiting_for_opponent_text(screen)
-            if get_players()[0] is not None and get_players()[1] is not None:
-                self.setup_board(screen)
-
-<<<<<<< HEAD
         X, Y = pygame.display.get_surface().get_size()
         if not self.ready:
             self.update_text(screen, self.__waiting_for_opponent_text, (X//2, Y//3))
+            if get_players()[0] is not None and get_players()[1] is not None:
+                self.setup_board(screen)
         else:
-            # pygame.draw.rect(screen, KERNEL_COLOR, KERNEL_RECTANGLE)
-            board = Game.get_instance().board
-            if board.state.type_of_state == 'frozen':
-                X, Y = pygame.display.get_surface().get_size()
-                self.update_text(screen, self.__opponents_turn_text, (X//2, 40))
-=======
-        else:
-            # pygame.draw.rect(screen, KERNEL_COLOR, KERNEL_RECTANGLE)
             board = Game.get_instance().board
             if board.state.type_of_state() == 'frozen':
-                opponents_turn_text(screen)
->>>>>>> 8207c2d0e2c4d48bccefabb9148f923e86d073be
+                X, Y = pygame.display.get_surface().get_size()
+                self.update_text(screen, self.__opponents_turn_text, (X//2, 40))
             board_fields = board.fields
             for x in range(len(board_fields)):
                 for y in range(len(board_fields[0])):
@@ -150,6 +137,7 @@ class Screen:
                     self.fields[x][y].draw(screen)
                     if board_fields[x][y].figure is not None:
                         self.fields[x][y].draw_figure(screen, board_fields[x][y].figure)
+        pygame.display.update()
 
     def handle(self, events, pressed_keys):
         for ev in events:

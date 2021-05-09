@@ -8,8 +8,5 @@ class FrozenState(AbstractBoardState):
         pass
 
     def type_of_state(self):
-<<<<<<< HEAD
         return 'frozen'
-=======
-        return "frozen"
->>>>>>> 8207c2d0e2c4d48bccefabb9148f923e86d073be
+
