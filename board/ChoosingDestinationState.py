@@ -30,6 +30,7 @@ class ChoosingDestinationState(AbstractBoardState):
         occupation = clicked_field.get_occupation_type(PlayerManager.get_instance().my_player)
         chosen_fig = chosen_field.figure
         action_successful = False
+        f = None
         if occupation == FieldOccupation.EMPTY and (x, y) in self.__possible_steps:  # step
             chosen_field.figure.has_not_moved_yet = False
             clicked_field.add_figure(chosen_fig)  # occupy new field
@@ -39,9 +40,6 @@ class ChoosingDestinationState(AbstractBoardState):
         elif occupation == FieldOccupation.ENEMY and (x, y) in self.__possible_attacks:  # attack
             chosen_field.figure.has_not_moved_yet = False
             f = clicked_field.remove_figure()  # killing figure there
-            if isinstance(f, King):
-                print("shit happens")
-                self._board.transition_to(self._board.won_game)
             clicked_field.add_figure(chosen_fig)  # occupy new field
             chosen_field.remove_figure()  # abandon old field
             action_successful = True
@@ -52,6 +50,9 @@ class ChoosingDestinationState(AbstractBoardState):
                 PlayerManager.get_instance().other_player.turn_started(self._board)
         else:
             self._board.transition_to(self._board.choosing_acting_figure_state)
+        if f is not None and isinstance(f, King):
+            print("shit happens")
+            self._board.transition_to(self._board.won_game)
         return None
 
     def type_of_state(self):

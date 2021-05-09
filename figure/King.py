@@ -18,5 +18,5 @@ class King(Figure):
 
     def export_state(self):
         d = super().export_state()
-        d['figure_name'] = "king"
+        d.append("king")
         return d

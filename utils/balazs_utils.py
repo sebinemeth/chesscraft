@@ -101,7 +101,7 @@ def figure_image_path(figure):
         img_path = img_path + '0/'
     else:
         img_path = img_path + '1/'
-    figure_type = figure.export_state()['figure_name']
+    figure_type = figure.export_state()[1]
     img_path = img_path + figure_type
 
     return img_path+'.png'

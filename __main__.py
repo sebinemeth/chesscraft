@@ -14,6 +14,8 @@ def main(multiplayer=False):
     """" The main function of the game. """
     FPS = 60
     pg.init()  # initializes pyGame
+    pg.display.set_caption("ChessCraft")
+    pg.display.set_icon(pg.image.load('images/1/king.png'))
     clock = pg.time.Clock()
 
     if multiplayer:
