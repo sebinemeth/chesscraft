@@ -134,9 +134,9 @@ class Screen:
         else:
             board = Game.get_instance().board
             if board.state.type_of_state() == 'lost_game':
-                self.update_text(screen, self.__won_text, (X // 2, 30))
-            elif board.state.type_of_state() == 'won_game':
                 self.update_text(screen, self.__lost_text, (X // 2, 30))
+            elif board.state.type_of_state() == 'won_game':
+                self.update_text(screen, self.__won_text, (X // 2, 30))
             else:
                 if board.state.type_of_state() == 'frozen':
                     X, Y = pygame.display.get_surface().get_size()

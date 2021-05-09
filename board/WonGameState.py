@@ -1,6 +1,4 @@
 from board.AbstractBoardState import AbstractBoardState
-from player.PlayerManager import PlayerManager
-from enums.FieldOccupation import FieldOccupation
 
 
 class WonGameState(AbstractBoardState):

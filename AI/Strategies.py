@@ -1,4 +1,5 @@
 import random
+
 from enums.FieldOccupation import FieldOccupation
 
 

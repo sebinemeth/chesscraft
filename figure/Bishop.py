@@ -1,10 +1,7 @@
-from figure.Figure import Figure
 from data_classes.SimplifiedBoard import SimplifiedBoard
-from enums.FieldOccupation import FieldOccupation
-from utils.balazs_utils import possible_fields_long_step, possible_attacks_long_step
+from figure.Figure import Figure
 from player.Player import Player
-
-from typing import List
+from utils.balazs_utils import possible_fields_long_step, possible_attacks_long_step
 
 
 class Bishop(Figure):

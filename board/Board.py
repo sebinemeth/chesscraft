@@ -10,13 +10,13 @@ from board.WonGameState import WonGameState
 from data_classes.FigureActOptions import FigureActOptions
 from data_classes.SimplifiedBoard import SimplifiedBoard
 from enums.Direction import Direction
+from figure.Bishop import Bishop
 from figure.FigureFactory import FigureFactory
-from figure.Peasant import Peasant
-from figure.Rook import Rook
 from figure.King import King
 from figure.Knight import Knight
+from figure.Peasant import Peasant
 from figure.Queen import Queen
-from figure.Bishop import Bishop
+from figure.Rook import Rook
 from player.Player import Player
 from player.PlayerManager import PlayerManager
 
@@ -105,8 +105,8 @@ class Board:
     def check_king(self):
         for row in self.fields:
             for f in row:
-                if f.figure is not None and isinstance(f.figure,
-                                                       King) and f.figure.owner == PlayerManager.get_instance().my_player:
+                if f.figure is not None and isinstance(f.figure, King) \
+                        and f.figure.owner == PlayerManager.get_instance().my_player:
                     return True
         return False
 
