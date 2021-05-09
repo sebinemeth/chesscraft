@@ -111,14 +111,16 @@ class Board:
         return False
 
     def transition_to(self, state: AbstractBoardState, **messages):
+        target_state = state
+
         if isinstance(state, ChoosingActingFigureState):
             if not self.check_king():
-                self.transition_to(self.lost_game)
+                target_state = self.lost_game
         try:
-            state.reset(**messages)
+            target_state.reset(**messages)
         except KeyError:
             print("Kedves Balázs, Marci vagy Sebi! Legyél szíves rendesen kezelni a messages szótárat!", sys.exc_info())
-        self.__state = state
+        self.__state = target_state
 
     def create_simplified_board(self, player: Player) -> SimplifiedBoard:
         return SimplifiedBoard(tuple(tuple(self.fields[x][y].get_occupation_type(player)

@@ -134,30 +134,30 @@ class Screen:
         else:
             board = Game.get_instance().board
             if board.state.type_of_state() == 'lost_game':
-                self.update_text(screen, self.__won_text, (X // 2, 30))
-            elif board.state.type_of_state() == 'won_game':
                 self.update_text(screen, self.__lost_text, (X // 2, 30))
-            else:
-                if board.state.type_of_state() == 'frozen':
-                    X, Y = pygame.display.get_surface().get_size()
-                    self.update_text(screen, self.__opponents_turn_text, (X // 2, 30))
-                board_fields = board.fields
-                for x in range(len(board_fields)):
-                    for y in range(len(board_fields[0])):
-                        self.fields[x][y].reset_color()
-                        if board.state.type_of_state() == 'choosing_figure':
-                            self.update_text(screen, self.__choose_figure_text, (X // 2, 30))
-                            if self.fields[x][y].is_over(mouse):
-                                self.fields[x][y].set_color(SELECT_COLOR)
-                        if board.state.type_of_state() == 'choosing_destination':
-                            self.update_text(screen, self.__choose_action_text, (X // 2, 30))
-                            if self.__steps is not None and (x, y) in self.__steps:
-                                self.fields[x][y].set_color(STEP_COLOR)
-                            if self.__attacks is not None and (x, y) in self.__attacks:
-                                self.fields[x][y].set_color(ATTACK_COLOR)
-                        self.fields[x][y].draw(screen)
-                        if board_fields[x][y].figure is not None:
-                            self.fields[x][y].draw_figure(screen, board_fields[x][y].figure)
+            elif board.state.type_of_state() == 'won_game':
+                self.update_text(screen, self.__won_text, (X // 2, 30))
+            elif board.state.type_of_state() == 'frozen':
+                X, Y = pygame.display.get_surface().get_size()
+                self.update_text(screen, self.__opponents_turn_text, (X // 2, 30))
+
+            board_fields = board.fields
+            for x in range(len(board_fields)):
+                for y in range(len(board_fields[0])):
+                    self.fields[x][y].reset_color()
+                    if board.state.type_of_state() == 'choosing_figure':
+                        self.update_text(screen, self.__choose_figure_text, (X // 2, 30))
+                        if self.fields[x][y].is_over(mouse):
+                            self.fields[x][y].set_color(SELECT_COLOR)
+                    if board.state.type_of_state() == 'choosing_destination':
+                        self.update_text(screen, self.__choose_action_text, (X // 2, 30))
+                        if self.__steps is not None and (x, y) in self.__steps:
+                            self.fields[x][y].set_color(STEP_COLOR)
+                        if self.__attacks is not None and (x, y) in self.__attacks:
+                            self.fields[x][y].set_color(ATTACK_COLOR)
+                    self.fields[x][y].draw(screen)
+                    if board_fields[x][y].figure is not None:
+                        self.fields[x][y].draw_figure(screen, board_fields[x][y].figure)
         pygame.display.update()
 
     def handle(self, events, pressed_keys):

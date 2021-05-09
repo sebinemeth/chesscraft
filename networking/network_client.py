@@ -37,7 +37,8 @@ def network_thread(some_param):
                 break
 
             if pm.get_instance().my_turn():
-                if Game.get_instance().board.state.type_of_state() == 'frozen':
+                if Game.get_instance().board.state.type_of_state() == 'frozen' \
+                        or Game.get_instance().board.state.type_of_state() == 'won_game':
                     # player chose action, we can send it to the network
                     state_json = json.dumps(Game.get_instance().board.export_state())
                     req = StepCommand(state_json)
@@ -75,15 +76,15 @@ def network_thread(some_param):
                 logging.error(f"json decode error {e}")
                 continue
 
+            if len(new_state_json) > 0 and new_state is not None:
+                Game.get_instance().board.import_state(new_state)
+
             if int(res.payload[8:9]) == my_id:
                 logging.info("my turn")
                 pm.get_instance().turn_of(my_id)
                 Game.get_instance().board.transition_to(Game.get_instance().board.choosing_acting_figure_state)
             else:
                 pm.get_instance().turn_of(1 - my_id)
-
-            if len(new_state_json) > 0 and new_state is not None:
-                Game.get_instance().board.import_state(new_state)
 
         elif res.type == CommandType.WAIT:
             pass
