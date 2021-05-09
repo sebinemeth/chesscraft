@@ -1,5 +1,5 @@
-from player.Player import Player
 from AI.Strategies import randomly_attack
+from player.Player import Player
 
 
 class AIPlayer(Player):

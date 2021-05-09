@@ -1,10 +1,9 @@
 from board.AbstractBoardState import AbstractBoardState
 from data_classes.FigureActOptions import FigureActOptions
-from figure.King import King
-from player.PlayerManager import PlayerManager
 from enums.FieldOccupation import FieldOccupation
-from figure.Figure import Figure
+from figure.King import King
 from player.AIPlayer import AIPlayer
+from player.PlayerManager import PlayerManager
 
 
 class ChoosingDestinationState(AbstractBoardState):

@@ -1,5 +1,3 @@
-from data_classes.SimplifiedBoard import SimplifiedBoard
-from enums.FieldOccupation import FieldOccupation
 # from figure.Peasant import Peasant
 # from figure.Rook import Rook
 # from figure.Queen import Queen
@@ -7,7 +5,11 @@ from enums.FieldOccupation import FieldOccupation
 # from figure.Knight import Knight
 # from figure.King import King
 from typing import List
+
 import numpy as np
+
+from data_classes.SimplifiedBoard import SimplifiedBoard
+from enums.FieldOccupation import FieldOccupation
 
 
 def in_board(x, y) -> bool:
