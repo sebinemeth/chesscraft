@@ -1,5 +1,5 @@
 from gui_widgets.button import Button
-from utils.balazs_utils import figure_color
+from utils.balazs_utils import figure_image_path
 import pygame
 
 FIELD_SIZE = 50
@@ -22,8 +22,5 @@ class FieldWidget(Button):
         self.color = self.original_color
 
     def draw_figure(self, screen, figure):
-        # if figure.owner.id == 0:
-        #     color = [0, 150, 150]
-        # else:
-        #     color = [150, 150, 0]
-        pygame.draw.rect(screen, figure_color(figure), [self.x+5, self.y+5, 40, 40])
+        img = pygame.image.load(figure_image_path(figure))
+        screen.blit(pygame.transform.scale(img, (40, 40)), (self.x+5, self.y+5))

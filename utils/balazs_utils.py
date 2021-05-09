@@ -93,30 +93,13 @@ def possible_attacks_one_step(field: (int, int), directions,
     return ret
 
 
-def figure_color(figure):
-    color_a = 0
-    color_b = 0
-    figure_type = figure.export_state()['figure_name']
-    if figure_type == 'peasant':
-        color_a = 80
-        color_b = 150
-    if figure_type == 'knight':
-        color_a = 100
-        color_b = 100
-    if figure_type == 'bishop':
-        color_a = 150
-        color_b = 100
-    if figure_type == 'rook':
-        color_a = 200
-        color_b = 100
-    if figure_type == 'queen':
-        color_a = 250
-        color_b = 100
-    if figure_type == 'king':
-        color_a = 250
-        color_b = 200
-
+def figure_image_path(figure):
+    img_path = 'images/'
     if figure.owner.id == 0:
-        return [color_a, color_b, 200]
+        img_path = img_path + '0/'
     else:
-        return [color_a, color_b, 50]
+        img_path = img_path + '1/'
+    figure_type = figure.export_state()['figure_name']
+    img_path = img_path + figure_type
+
+    return img_path+'.png'
