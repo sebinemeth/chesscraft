@@ -31,4 +31,4 @@ class Figure(ABC):
         """ Retrieves the list of field positions, where it can attack. """
 
     def export_state(self):
-        return {'player_id': self.owner.id}
+        return [self.owner.id]

@@ -18,6 +18,6 @@ class Bishop(Figure):
 
     def export_state(self):
         d = super().export_state()
-        d['figure_name'] = "bishop"
+        d.append("bishop")
         return d
 

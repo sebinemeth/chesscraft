@@ -137,12 +137,12 @@ class Board:
         for i in range(len(json_object)):
             for j in range(len(json_object[i])):
                 self.fields[i][j].remove_figure()
-                if json_object[i][j] is not None:
+                if json_object[i][j] != 0:
                     player = PlayerManager.get_instance().my_player
-                    if json_object[i][j]['player_id'] != PlayerManager.get_instance().my_player.id:
+                    if json_object[i][j][0] != PlayerManager.get_instance().my_player.id:
                         player = PlayerManager.get_instance().other_player
 
-                    f = FigureFactory.get_figure(json_object[i][j]['figure_name'], player)
+                    f = FigureFactory.get_figure(json_object[i][j][1], player)
 
                     if f is not None:
                         self.fields[i][j].add_figure(f)

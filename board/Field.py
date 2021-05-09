@@ -33,5 +33,5 @@ class Field:
 
     def export_state(self):
         if self.figure is None:
-            return None
+            return 0
         return self.figure.export_state()

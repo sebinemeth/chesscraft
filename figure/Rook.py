@@ -25,5 +25,5 @@ class Rook(Figure):
 
     def export_state(self):
         d = super().export_state()
-        d['figure_name'] = "rook"
+        d.append("rook")
         return d
