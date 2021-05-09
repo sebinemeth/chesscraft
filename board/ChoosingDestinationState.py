@@ -35,8 +35,6 @@ class ChoosingDestinationState(AbstractBoardState):
             chosen_field.figure.has_not_moved_yet = False
             clicked_field.add_figure(chosen_fig)  # occupy new field
             chosen_field.remove_figure()  # abandon old field
-            if isinstance(PlayerManager.get_instance().other_player, AIPlayer):
-                PlayerManager.get_instance().other_player.turn_started(self._board)
             action_successful = True
 
         elif occupation == FieldOccupation.ENEMY and (x, y) in self.__possible_attacks:  # attack
@@ -46,12 +44,12 @@ class ChoosingDestinationState(AbstractBoardState):
                 print("shit happens")
             clicked_field.add_figure(chosen_fig)  # occupy new field
             chosen_field.remove_figure()  # abandon old field
-            if isinstance(PlayerManager.get_instance().other_player, AIPlayer):
-                PlayerManager.get_instance().other_player.turn_started(self._board)
             action_successful = True
 
         if action_successful:
             self._board.transition_to(self._board.frozen_state)
+            if isinstance(PlayerManager.get_instance().other_player, AIPlayer):
+                PlayerManager.get_instance().other_player.turn_started(self._board)
         else:
             self._board.transition_to(self._board.choosing_acting_figure_state)
         return None

@@ -8,6 +8,7 @@ from Screen import Screen
 from game.Game import Game
 from player.PlayerManager import PlayerManager
 
+
 def main(multiplayer=False):
 
     """" The main function of the game. """
@@ -22,7 +23,7 @@ def main(multiplayer=False):
         pm = PlayerManager.get_instance()
         pm.add_own_player_id(0)
         pm.add_other_player_id(1)
-        pm.create_players(1, False)
+        pm.create_players(0, False)
 
     # itt a board: Game.get_instance().board
     res = (720, 720)

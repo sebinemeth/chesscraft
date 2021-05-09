@@ -62,6 +62,15 @@ def network_thread(some_param):
 
                 pm.create_players(0)
 
+            new_state_json = res.payload[10:]
+            new_state = None
+            try:
+                if len(new_state_json) > 0:
+                    new_state = json.loads(new_state_json)
+            except Exception as e:
+                logging.error(f"json decode error {e}")
+                continue
+
             if int(res.payload[8:9]) == my_id:
                 logging.info("my turn")
                 pm.get_instance().turn_of(my_id)
@@ -69,9 +78,8 @@ def network_thread(some_param):
             else:
                 pm.get_instance().turn_of(1 - my_id)
 
-            new_state_json = res.payload[10:]
-            if len(new_state_json) > 0:
-                Game.get_instance().board.import_state(json.loads(new_state_json))
+            if len(new_state_json) > 0 and new_state is not None:
+                Game.get_instance().board.import_state(new_state)
 
         elif res.type == CommandType.WAIT:
             pass
