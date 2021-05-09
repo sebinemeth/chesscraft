@@ -115,7 +115,8 @@ def figure_color(figure):
     if figure_type == 'king':
         color_a = 250
         color_b = 200
-
+    color_a = 100
+    color_b = 200
     if figure.owner.id == 0:
         return [color_a, color_b, 200]
     else:
