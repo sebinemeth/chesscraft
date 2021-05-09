@@ -10,7 +10,7 @@ from game.Game import Game
 
 def main():
     """" The main function of the game. """
-    FPS = 30
+    FPS = 60
     pg.init()  # initializes pyGame
     clock = pg.time.Clock()
 

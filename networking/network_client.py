@@ -78,7 +78,7 @@ def network_thread(some_param):
         else:
             logging.warning("unexpected message")
 
-        time.sleep(5)
+        time.sleep(1)
 
 
 def run_network_thread():
