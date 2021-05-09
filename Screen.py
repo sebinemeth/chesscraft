@@ -11,6 +11,7 @@ ATTACK_COLOR = (230, 80, 0)
 SELECT_COLOR = (120, 250, 120)
 KERNEL_COLOR = (20, 60, 100)
 KERNEL_RECTANGLE = (140, 80, 440, 440)
+PLAYER_COLOR = ('blue', 'orange')
 
 
 def font():
@@ -64,6 +65,7 @@ class Screen:
             self.__opponents_turn_text = None
             self.__choose_figure_text = None
             self.__choose_action_text = None
+            self.__player_id = None
 
     @property
     def fields(self):
@@ -85,10 +87,12 @@ class Screen:
             self.__steps = act_options.possible_steps
             self.__attacks = act_options.possible_attacks
 
-    def setup_board(self, screen):
+    def setup_board(self, screen, player):
         self.set_ready(True)
         self.init_fields()
         pygame.draw.rect(screen, KERNEL_COLOR, KERNEL_RECTANGLE)
+        self.__player_id = player.id
+        self.player_color_text(screen)
 
     def setup_texts(self, screen):
         self.__waiting_for_opponent_text = font().render('Waiting for a worthy opponent', True, KERNEL_COLOR)
@@ -101,10 +105,17 @@ class Screen:
             if self.__current_text is not None:
                 pygame.draw.rect(screen, (250, 250, 250), (0, 0, 720, 390))
                 pygame.draw.rect(screen, KERNEL_COLOR, KERNEL_RECTANGLE)
+                self.player_color_text(screen)
             self.__current_text = text
             text_rect = self.__current_text.get_rect()
             text_rect.center = center
             screen.blit(self.__current_text, text_rect)
+
+    def player_color_text(self, screen):
+        player_text = font().render(f'Your color is {PLAYER_COLOR[self.__player_id]}', True, KERNEL_COLOR)
+        text_rect = player_text.get_rect()
+        text_rect.center = (360, 65)
+        screen.blit(player_text, text_rect)
 
     def update(self, screen, mouse):
         if self.__waiting_for_opponent_text is None:
@@ -114,22 +125,22 @@ class Screen:
         if not self.ready:
             self.update_text(screen, self.__waiting_for_opponent_text, (X//2, Y//3))
             if get_players()[0] is not None and get_players()[1] is not None:
-                self.setup_board(screen)
+                self.setup_board(screen, get_players()[0])
         else:
             board = Game.get_instance().board
             if board.state.type_of_state() == 'frozen':
                 X, Y = pygame.display.get_surface().get_size()
-                self.update_text(screen, self.__opponents_turn_text, (X//2, 40))
+                self.update_text(screen, self.__opponents_turn_text, (X//2, 30))
             board_fields = board.fields
             for x in range(len(board_fields)):
                 for y in range(len(board_fields[0])):
                     self.fields[x][y].reset_color()
                     if board.state.type_of_state() == 'choosing_figure':
-                        self.update_text(screen, self.__choose_figure_text, (X//2, 40))
+                        self.update_text(screen, self.__choose_figure_text, (X//2, 30))
                         if self.fields[x][y].is_over(mouse):
                             self.fields[x][y].set_color(SELECT_COLOR)
                     if board.state.type_of_state() == 'choosing_destination':
-                        self.update_text(screen, self.__choose_action_text, (X//2, 40))
+                        self.update_text(screen, self.__choose_action_text, (X//2, 30))
                         if self.__steps is not None and (x, y) in self.__steps:
                             self.fields[x][y].set_color(STEP_COLOR)
                         if self.__attacks is not None and (x, y) in self.__attacks:
