@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from player.Player import Player
-from player.HumanPlayer import HumanPlayer
-from player.AIPlayer import AIPlayer
 from enums.Direction import Direction
+from player.AIPlayer import AIPlayer
+from player.HumanPlayer import HumanPlayer
+from player.Player import Player
 
 
 class PlayerManager:
@@ -79,3 +79,16 @@ class PlayerManager:
         else:
             self.__current_player = self.__own_player
         self.__current_player.turn_started()
+
+    def turn_of(self, player_id):
+        if self.__current_player.id == player_id:
+            return
+
+        if self.__own_player.id == player_id:
+            self.__current_player = self.__own_player
+        else:
+            self.__current_player = self.__other_player
+        self.__current_player.turn_started()
+
+    def my_turn(self):
+        return self.__current_player == self.__own_player

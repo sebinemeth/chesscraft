@@ -1,7 +1,11 @@
-import pygame as pg
-from Screen import Screen
-import networking.network_client as client
+import logging
+import sys
 
+import pygame as pg
+
+import networking.network_client as client
+from Screen import Screen
+from game.Game import Game
 
 
 def main():
@@ -9,6 +13,8 @@ def main():
     FPS = 30
     pg.init()  # initializes pyGame
     clock = pg.time.Clock()
+
+    logging.basicConfig(level=logging.DEBUG)
 
     client.run_network_thread()
 
@@ -32,6 +38,7 @@ def main():
         clock.tick(1000//FPS)
         pg.display.update()
     pg.quit()
+    Game.get_instance().quit()
 
 
 if __name__ == "__main__":

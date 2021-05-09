@@ -7,6 +7,7 @@ from figure.Figure import Figure
 
 class ChoosingDestinationState(AbstractBoardState):
     """ Handles simple moving/attacking. """
+
     def __init__(self, board):
         super(AbstractBoardState, self).__init__()
         self._board = board
@@ -28,16 +29,24 @@ class ChoosingDestinationState(AbstractBoardState):
         clicked_field = self.field_xy(x, y)
         occupation = clicked_field.get_occupation_type(PlayerManager.get_instance().my_player)
         chosen_fig = chosen_field.figure
+        action_successful = False
         if occupation == FieldOccupation.EMPTY and (x, y) in self.__possible_steps:  # step
             chosen_field.figure.has_not_moved_yet = False
             clicked_field.add_figure(chosen_fig)  # occupy new field
             chosen_field.remove_figure()  # abandon old field
+            action_successful = True
+
         elif occupation == FieldOccupation.ENEMY and (x, y) in self.__possible_attacks:  # attack
             chosen_field.figure.has_not_moved_yet = False
             clicked_field.remove_figure()  # killing figure there
             clicked_field.add_figure(chosen_fig)  # occupy new field
             chosen_field.remove_figure()  # abandon old field
-        self._board.transition_to(self._board.choosing_acting_figure_state)  # TODO somehow count player steps
+            action_successful = True
+
+        if action_successful:
+            self._board.transition_to(self._board.frozen_state)
+        else:
+            self._board.transition_to(self._board.choosing_acting_figure_state)
         return None
 
     def type_of_state(self):

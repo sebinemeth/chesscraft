@@ -22,14 +22,14 @@ class Network:
     def connect(self):
         try:
             self.client.connect(self.addr)
-            return self.client.recv(2048).decode()
+            return self.client.recv(4096).decode()
         except socket.error as e:
             logging.error(e)
 
     def send(self, data):
         try:
             self.client.send(str.encode(data))
-            response = self.client.recv(2048).decode()
+            response = self.client.recv(4096).decode()
             logging.debug(f"message #{next(self.counter)}")
             return response
         except socket.error as e:
