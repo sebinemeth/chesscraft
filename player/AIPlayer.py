@@ -8,4 +8,3 @@ class AIPlayer(Player):
         randomly_attack(self, board)
         board.transition_to(board.choosing_acting_figure_state)
         return False
-

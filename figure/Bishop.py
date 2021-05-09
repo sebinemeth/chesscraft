@@ -20,4 +20,3 @@ class Bishop(Figure):
         d = super().export_state()
         d.append("bishop")
         return d
-

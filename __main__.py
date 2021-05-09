@@ -10,7 +10,6 @@ from player.PlayerManager import PlayerManager
 
 
 def main(multiplayer=False):
-
     """" The main function of the game. """
     FPS = 60
     pg.init()  # initializes pyGame

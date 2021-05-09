@@ -12,14 +12,14 @@ class Peasant(Figure):
         self.step_direction = [(self.owner.direction_signed_1, 0)]
         self.attack_direction = [(self.owner.direction_signed_1, 1), (self.owner.direction_signed_1, -1)]
 
-    def collect_possible_steps(self, simple_board: SimplifiedBoard): #-> List[(int, int)]:
+    def collect_possible_steps(self, simple_board: SimplifiedBoard):  # -> List[(int, int)]:
         # if simple_board[self.x + self.owner.direction_signed_1][self.y] == FieldOccupation.EMPTY:
         #     return [(self.x + self.owner.direction_signed_1, self.y)]
         # else:
         #     return []
         # TODO: double step from the first row
         if self.has_not_moved_yet:
-            init_step_direction = [(self.owner.direction_signed_1, 0), (self.owner.direction_signed_1*2, 0)]
+            init_step_direction = [(self.owner.direction_signed_1, 0), (self.owner.direction_signed_1 * 2, 0)]
             return possible_fields_one_step((self.x, self.y), init_step_direction, simple_board)
         return possible_fields_one_step((self.x, self.y), self.step_direction, simple_board)
 

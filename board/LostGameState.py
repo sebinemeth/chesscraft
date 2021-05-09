@@ -7,5 +7,3 @@ class LostGameState(AbstractBoardState):
 
     def type_of_state(self):
         return 'lost_game'
-
-

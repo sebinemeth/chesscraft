@@ -12,7 +12,7 @@ class FieldWidget(Button):
 
     def __init__(self, x, y):
         color = [120, 120, 130] if (x - y) % 2 == 0 else [200, 200, 200]
-        super().__init__(color, x*FIELD_SIZE+SIDE_MARGIN, y*FIELD_SIZE+TOP_MARGIN, FIELD_SIZE, FIELD_SIZE)
+        super().__init__(color, x * FIELD_SIZE + SIDE_MARGIN, y * FIELD_SIZE + TOP_MARGIN, FIELD_SIZE, FIELD_SIZE)
         self.figure = None
         self.original_color = color
 
@@ -24,4 +24,4 @@ class FieldWidget(Button):
 
     def draw_figure(self, screen, figure):
         img = pygame.image.load(figure_image_path(figure))
-        screen.blit(pygame.transform.scale(img, (40, 40)), (self.x+5, self.y+5))
+        screen.blit(pygame.transform.scale(img, (40, 40)), (self.x + 5, self.y + 5))

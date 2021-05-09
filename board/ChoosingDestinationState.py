@@ -8,6 +8,7 @@ from player.PlayerManager import PlayerManager
 
 class ChoosingDestinationState(AbstractBoardState):
     """ Handles simple moving/attacking. """
+
     def __init__(self, board):
         super(AbstractBoardState, self).__init__()
         self._board = board

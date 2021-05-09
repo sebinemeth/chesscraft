@@ -45,6 +45,7 @@ class PlayerManager:
         """ If we want automatic turn passing, GUI can check this repeatedly and call Game's turn ending when
             it's true. Or combine this with some timer or whatever GUI feels good. :) """
         return self.current_player.is_finished_turn()
+
     # endregion
 
     def add_own_player_id(self, some_id):

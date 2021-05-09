@@ -7,5 +7,3 @@ class WonGameState(AbstractBoardState):
 
     def type_of_state(self):
         return 'won_game'
-
-

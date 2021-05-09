@@ -50,7 +50,7 @@ def possible_fields_long_step(field: (int, int), directions,
 
 
 def possible_attacks_long_step(field: (int, int), directions,
-                               simple_board: SimplifiedBoard):   # -> List[(int, int)]:
+                               simple_board: SimplifiedBoard):  # -> List[(int, int)]:
     """
         :return: coordinates of the first enemy fields in the directions of "additions"
         :rtype: List[(int, int)]
@@ -104,4 +104,4 @@ def figure_image_path(figure):
     figure_type = figure.export_state()[1]
     img_path = img_path + figure_type
 
-    return img_path+'.png'
+    return img_path + '.png'

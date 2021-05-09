@@ -25,7 +25,7 @@ def randomly_attack(ai_player, board):
                     possible_attacks.append([field, board.fields[attacks[0][0]][attacks[0][1]]])
 
     if len(possible_attacks) > 0:
-        randi = random.randint(0, len(possible_attacks)-1)
+        randi = random.randint(0, len(possible_attacks) - 1)
         attack(*possible_attacks[randi])
         return True
     possible_steps = []
@@ -35,11 +35,10 @@ def randomly_attack(ai_player, board):
                 simplified_board = board.create_simplified_board(ai_player)
                 steps = field.figure.collect_possible_steps(simplified_board)
                 if steps is not None and len(steps) > 0:
-
                     possible_steps.append([field, board.fields[steps[0][0]][steps[0][1]]])
 
     if len(possible_steps) > 0:
-        randi = random.randint(0, len(possible_steps)-1)
+        randi = random.randint(0, len(possible_steps) - 1)
         step(*possible_steps[randi])
         return True
     return False
