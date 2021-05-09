@@ -66,6 +66,8 @@ class Screen:
             self.__opponents_turn_text = None
             self.__choose_figure_text = None
             self.__choose_action_text = None
+            self.__won_text = None
+            self.__lost_text = None
             self.__player_id = None
 
     @property
@@ -100,6 +102,8 @@ class Screen:
         self.__opponents_turn_text = font().render('Opponent\'s turn...', True, KERNEL_COLOR)
         self.__choose_figure_text = font().render('Choose a figure', True, KERNEL_COLOR)
         self.__choose_action_text = font().render('Move: green, Attack: red', True, KERNEL_COLOR)
+        self.__won_text = font().render('You won!!! Next time won\'t be so easy!', True, KERNEL_COLOR)
+        self.__lost_text = font().render('Run you fool!', True, KERNEL_COLOR)
 
     def update_text(self, screen, text, center):
         if self.__current_text is not text:
@@ -130,29 +134,30 @@ class Screen:
         else:
             board = Game.get_instance().board
             if board.state.type_of_state() == 'lost_game':
-                pass
+                self.update_text(screen, self.__won_text, (X // 2, 30))
             elif board.state.type_of_state() == 'won_game':
-                pass
-            elif board.state.type_of_state() == 'frozen':
-                X, Y = pygame.display.get_surface().get_size()
-                self.update_text(screen, self.__opponents_turn_text, (X // 2, 30))
-            board_fields = board.fields
-            for x in range(len(board_fields)):
-                for y in range(len(board_fields[0])):
-                    self.fields[x][y].reset_color()
-                    if board.state.type_of_state() == 'choosing_figure':
-                        self.update_text(screen, self.__choose_figure_text, (X // 2, 30))
-                        if self.fields[x][y].is_over(mouse):
-                            self.fields[x][y].set_color(SELECT_COLOR)
-                    if board.state.type_of_state() == 'choosing_destination':
-                        self.update_text(screen, self.__choose_action_text, (X // 2, 30))
-                        if self.__steps is not None and (x, y) in self.__steps:
-                            self.fields[x][y].set_color(STEP_COLOR)
-                        if self.__attacks is not None and (x, y) in self.__attacks:
-                            self.fields[x][y].set_color(ATTACK_COLOR)
-                    self.fields[x][y].draw(screen)
-                    if board_fields[x][y].figure is not None:
-                        self.fields[x][y].draw_figure(screen, board_fields[x][y].figure)
+                self.update_text(screen, self.__lost_text, (X // 2, 30))
+            else:
+                if board.state.type_of_state() == 'frozen':
+                    X, Y = pygame.display.get_surface().get_size()
+                    self.update_text(screen, self.__opponents_turn_text, (X // 2, 30))
+                board_fields = board.fields
+                for x in range(len(board_fields)):
+                    for y in range(len(board_fields[0])):
+                        self.fields[x][y].reset_color()
+                        if board.state.type_of_state() == 'choosing_figure':
+                            self.update_text(screen, self.__choose_figure_text, (X // 2, 30))
+                            if self.fields[x][y].is_over(mouse):
+                                self.fields[x][y].set_color(SELECT_COLOR)
+                        if board.state.type_of_state() == 'choosing_destination':
+                            self.update_text(screen, self.__choose_action_text, (X // 2, 30))
+                            if self.__steps is not None and (x, y) in self.__steps:
+                                self.fields[x][y].set_color(STEP_COLOR)
+                            if self.__attacks is not None and (x, y) in self.__attacks:
+                                self.fields[x][y].set_color(ATTACK_COLOR)
+                        self.fields[x][y].draw(screen)
+                        if board_fields[x][y].figure is not None:
+                            self.fields[x][y].draw_figure(screen, board_fields[x][y].figure)
         pygame.display.update()
 
     def handle(self, events, pressed_keys):
