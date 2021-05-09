@@ -42,6 +42,7 @@ class ChoosingDestinationState(AbstractBoardState):
             f = clicked_field.remove_figure()  # killing figure there
             if isinstance(f, King):
                 print("shit happens")
+                self._board.transition_to(self._board.won_game)
             clicked_field.add_figure(chosen_fig)  # occupy new field
             chosen_field.remove_figure()  # abandon old field
             action_successful = True

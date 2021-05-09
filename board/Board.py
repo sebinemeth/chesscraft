@@ -5,6 +5,8 @@ from board.ChoosingActingFigureState import ChoosingActingFigureState
 from board.ChoosingDestinationState import ChoosingDestinationState
 from board.Field import Field
 from board.FrozenState import FrozenState
+from board.LostGameState import LostGameState
+from board.WonGameState import WonGameState
 from data_classes.FigureActOptions import FigureActOptions
 from data_classes.SimplifiedBoard import SimplifiedBoard
 from enums.Direction import Direction
@@ -12,7 +14,7 @@ from figure.FigureFactory import FigureFactory
 from figure.Peasant import Peasant
 from figure.Rook import Rook
 from figure.King import King
-from figure.Knight import  Knight
+from figure.Knight import Knight
 from figure.Queen import Queen
 from figure.Bishop import Bishop
 from player.Player import Player
@@ -28,6 +30,8 @@ class Board:
         self.__frozen_state = FrozenState(self)
         self.__choosing_acting_figure_state = ChoosingActingFigureState(self)
         self.__choosing_destination_state = ChoosingDestinationState(self)
+        self.__won_game = WonGameState(self)
+        self.__lost_game = LostGameState(self)
         self.fields = tuple(tuple(Field(x, y) for y in range(Board.SIZE)) for x in range(Board.SIZE))
         pm = PlayerManager.get_instance()
         right_player = None
@@ -78,18 +82,38 @@ class Board:
         return self.__frozen_state
 
     @property
+    def lost_game(self):
+        return self.__lost_game
+
+    @property
+    def won_game(self):
+        return self.__won_game
+
+    @property
     def choosing_acting_figure_state(self):
         return self.__choosing_acting_figure_state
 
     @property
     def choosing_destination_state(self):
         return self.__choosing_destination_state
+
     # endregion
 
     def field_clicked(self, x: int, y: int):
         return self.state.field_clicked(x, y)
 
+    def check_king(self):
+        for row in self.fields:
+            for f in row:
+                if f.figure is not None and isinstance(f.figure,
+                                                       King) and f.figure.owner == PlayerManager.get_instance().my_player:
+                    return True
+        return False
+
     def transition_to(self, state: AbstractBoardState, **messages):
+        if isinstance(state, ChoosingActingFigureState):
+            if not self.check_king():
+                self.transition_to(self.lost_game)
         try:
             state.reset(**messages)
         except KeyError:

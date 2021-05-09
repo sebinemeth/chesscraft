@@ -129,7 +129,11 @@ class Screen:
                 self.setup_board(screen, get_players()[0])
         else:
             board = Game.get_instance().board
-            if board.state.type_of_state() == 'frozen':
+            if board.state.type_of_state() == 'lost_game':
+                pass
+            elif board.state.type_of_state() == 'won_game':
+                pass
+            elif board.state.type_of_state() == 'frozen':
                 X, Y = pygame.display.get_surface().get_size()
                 self.update_text(screen, self.__opponents_turn_text, (X // 2, 30))
             board_fields = board.fields
