@@ -52,10 +52,10 @@ class Board:
                 self.fields[Board.SIZE - 1][i].add_figure(Bishop(right_player))
                 self.fields[0][i].add_figure(Bishop(left_player))
             if i == 3:
-                self.fields[Board.SIZE - 1][i].add_figure(King(right_player))
+                self.fields[Board.SIZE - 1][i].add_figure(Queen(right_player))
                 self.fields[0][i].add_figure(Queen(left_player))
             if i == 4:
-                self.fields[Board.SIZE - 1][i].add_figure(Queen(right_player))
+                self.fields[Board.SIZE - 1][i].add_figure(King(right_player))
                 self.fields[0][i].add_figure(King(left_player))
             # TODO add figures other figures to fields
 
