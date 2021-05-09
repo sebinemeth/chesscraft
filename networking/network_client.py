@@ -50,7 +50,11 @@ def network_thread(some_param):
         else:
             req = PingCommand()
 
-        res = Command.parse(n.send(req.print()))
+        res_raw = n.send(req.print())
+        if res_raw is None:
+            print("got None")
+            continue
+        res = Command.parse(res_raw)
         logging.info(f"=> {res.print()}")
 
         if res.type == CommandType.STATE:
