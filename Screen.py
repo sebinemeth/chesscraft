@@ -11,7 +11,7 @@ ATTACK_COLOR = (230, 80, 0)
 SELECT_COLOR = (120, 250, 120)
 KERNEL_COLOR = (20, 60, 100)
 KERNEL_RECTANGLE = (140, 80, 440, 440)
-PLAYER_COLOR = ('blue', 'orange')
+PLAYER_COLOR = ('black', 'white')
 
 
 def font():
@@ -42,6 +42,7 @@ def delete_top_text(screen):
 
 class Screen:
     __instance = None
+
 
     @staticmethod
     def get_instance():
