@@ -2,6 +2,8 @@ from board.AbstractBoardState import AbstractBoardState
 from data_classes.FigureActOptions import FigureActOptions
 from enums.FieldOccupation import FieldOccupation
 from figure.King import King
+from figure.Queen import Queen
+from figure.Peasant import Peasant
 from player.AIPlayer import AIPlayer
 from player.PlayerManager import PlayerManager
 
@@ -25,6 +27,13 @@ class ChoosingDestinationState(AbstractBoardState):
         self._board.chosen_field = self.field_xy(messages["chosen_x"], messages["chosen_y"])
         self._board.acts = FigureActOptions(True, messages["possible_steps"], messages["possible_attacks"])
 
+    def change_to_queen(self):
+        for row in self._board.fields:
+            for f in row:
+                if f.figure is not None and isinstance(f.figure, Peasant) and (f.x == 0 or f.x == 7):
+                    f.add_figure(Queen(f.figure.owner))  # occupy new field
+                    # abandon old field
+
     def field_clicked(self, x: int, y: int):
         chosen_field = self.field_xy(self.__chosen_x, self.__chosen_y)
         clicked_field = self.field_xy(x, y)
@@ -47,6 +56,7 @@ class ChoosingDestinationState(AbstractBoardState):
 
         if action_successful:
             self._board.transition_to(self._board.frozen_state)
+            self.change_to_queen()
             if isinstance(PlayerManager.get_instance().other_player, AIPlayer):
                 PlayerManager.get_instance().other_player.turn_started(self._board)
         else:

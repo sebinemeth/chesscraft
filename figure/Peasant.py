@@ -2,6 +2,7 @@ from data_classes.SimplifiedBoard import SimplifiedBoard
 from figure.Figure import Figure
 from player.Player import Player
 from utils.balazs_utils import possible_fields_one_step, possible_attacks_one_step
+from enums.FieldOccupation import FieldOccupation
 
 
 class Peasant(Figure):
@@ -18,9 +19,14 @@ class Peasant(Figure):
         # else:
         #     return []
         # TODO: double step from the first row
-        if self.has_not_moved_yet:
-            init_step_direction = [(self.owner.direction_signed_1, 0), (self.owner.direction_signed_1 * 2, 0)]
-            return possible_fields_one_step((self.x, self.y), init_step_direction, simple_board)
+        # if self.has_not_moved_yet:
+        #     init_step_direction = [(self.owner.direction_signed_1, 0), (self.owner.direction_signed_1 * 2, 0)]
+        #     return possible_fields_one_step((self.x, self.y), init_step_direction, simple_board)
+        if (self.x == 1 and self.owner.direction_signed_1 == 1) or (
+                self.x == 6 and self.owner.direction_signed_1 == -1):
+            if simple_board.fields[self.x + self.owner.direction_signed_1][self.y] is FieldOccupation.EMPTY:
+                init_step_direction = [(self.owner.direction_signed_1, 0), (self.owner.direction_signed_1 * 2, 0)]
+                return possible_fields_one_step((self.x, self.y), init_step_direction, simple_board)
         return possible_fields_one_step((self.x, self.y), self.step_direction, simple_board)
 
     def collect_possible_attacks(self, simple_board: SimplifiedBoard):  # -> List[(int, int)]:
